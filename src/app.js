@@ -66,10 +66,10 @@ app.get("/ping", (req, res, next) => {
   res.end("pong");
 });
 
-app.use(express.static(path.join(__dirname, "/build")));
+app.use(express.static(path.join(__dirname, "frontend/build")));
 
 app.use("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "/build/index.html"));
+  res.sendFile(path.join(__dirname, "/frontend/build/index.html"));
 });
 
 export default app;

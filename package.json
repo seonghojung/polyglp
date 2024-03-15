@@ -68,13 +68,11 @@
   "scripts": {
     "start": "sudo pm2 start build/init.js",
     "prestart": "npm run build",
-    "copyAll": "cp -R src/static build && cp -R src/views build",
-    "build": "npm run build:server && npm run build:assets && npm run copyAll",
-    "prebuild": "sudo rm -rf build",
-    "build:server": "babel src -d build --ignore 'src/assets','src/static','src/webpack.config.js'",
-    "build:assets": "cd src && webpack --mode=production",
+    "build": "npm run build:server && npm run front:build",
+    "build:server": "babel src -d build --ignore 'src/assets','src/static','src/webpack.config.js', 'src/frontend",
     "dev:server": "nodemon --exec babel-node src/init.js --delay 1 --ignore '.scss' --ignore 'static' ",
-    "dev:assets": "cd src && webpack --mode=development -w"
+    "dev:assets": "cd src/frontend && npm run start",
+    "front:build": "cd src/frontend && npm run build"
   },
   "devDependencies": {
     "@babel/cli": "^7.17.6",
