@@ -89,6 +89,11 @@ button{
   background-color: transparent;
 }
 
+img{
+  display: block;
+  object-fit: cover;
+}
+
 body {
   margin: 0 auto;
   font-family: "Pretendard", sans-serif;
