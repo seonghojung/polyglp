@@ -81,6 +81,11 @@ table {
 a {
   text-decoration:none;
   color:inherit;
+  &:hover{
+    text-decoration:none;
+    color:inherit;
+
+  }
 }
 button{
   cursor: pointer;
@@ -102,8 +107,4 @@ body {
   scroll-behavior: smooth;
 }
 
-
-
-
-  
 `;

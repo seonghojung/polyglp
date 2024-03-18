@@ -27,6 +27,7 @@ const MenuItems = styled.div``;
 const MenuItem = styled.div``;
 const Link = styled(NavLink)`
   padding: 18px 20px;
+  display: block;
 `;
 const ItemLeftWrap = styled.div``;
 const ItemIcon = styled.img``;
