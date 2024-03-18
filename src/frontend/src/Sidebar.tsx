@@ -45,7 +45,7 @@ export default function Sidebar() {
   return (
     <SidebarWrap>
       <MenuToggleBtn>
-        <ToggleBtnImg src="/public/menu_btn.png" />
+        <ToggleBtnImg src="/images/menu_btn.png" />
       </MenuToggleBtn>
       <MenuToggleWrap>
         <TopTitle>MENU</TopTitle>
@@ -131,7 +131,7 @@ export default function Sidebar() {
           {/* TODO: 로그아웃 링크 */}
           <LogoutWrap>
             <Link to="/logout">
-              <LogoutIcon src="/public/images/user.png" alt="로그아웃"></LogoutIcon>
+              <LogoutIcon src="/images/user.png" alt="로그아웃"></LogoutIcon>
             </Link>
           </LogoutWrap>
         </AdminInfoWrap>
