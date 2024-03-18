@@ -30,7 +30,9 @@ const Link = styled(NavLink)`
   display: block;
 `;
 const ItemLeftWrap = styled.div``;
-const ItemIcon = styled.img``;
+const ItemIcon = styled.img`
+  width: 20px;
+`;
 const ItemText = styled.p``;
 const ItemAlarm = styled.div``;
 const AdminInfoWrap = styled.div``;
