@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 import { useState } from "react";
@@ -107,7 +107,12 @@ const AdminInfoWrap = styled.div`
   align-items: center;
   justify-content: center;
 `;
-const InfoCenterWrap = styled.div``;
+const InfoCenterWrap = styled.div`
+  display: none;
+  &.active {
+    display: block;
+  }
+`;
 const AdminName = styled.p`
   font-size: 18px;
   font-weight: 500;
@@ -135,17 +140,22 @@ const LogoutIcon = styled.img`
 interface IMenuItemFunc {
   to: string;
   iconSrc: string;
+  activeIconSrc: string;
   text: string;
   hasAlarm: boolean;
 }
 
 // Iterator Component
-const MenuItemFunc: React.FC<IMenuItemFunc> = ({ to, iconSrc, text, hasAlarm }) => {
+const MenuItemFunc: React.FC<IMenuItemFunc> = ({ to, iconSrc, activeIconSrc, text, hasAlarm }) => {
+  const location = useLocation();
+  const isActive = location.pathname === to;
+  console.log(location, to);
+
   return (
     <MenuItem>
       <Link to={to}>
         <ItemLeftWrap>
-          <ItemIcon src={iconSrc} />
+          <ItemIcon src={isActive ? activeIconSrc : iconSrc} />
           <ItemText>{text}</ItemText>
         </ItemLeftWrap>
         {hasAlarm && <ItemAlarm>0</ItemAlarm>} {/* 조건부 렌더링 */}
@@ -170,21 +180,21 @@ export default function Sidebar() {
         <ToggleTopWrap>
           <TopTitle>MENU</TopTitle>
           <MenuItems>
-            <MenuItemFunc to="/dashboard" iconSrc="/images/sidebar/dashboard.png" text="대시 보드" hasAlarm={false} />
-            <MenuItemFunc to="/user-info" iconSrc="/images/sidebar/user-info.png" text="회원 정보" hasAlarm={false} />
-            <MenuItemFunc to="/cs" iconSrc="/images/sidebar/cs.png" text="CS관리" hasAlarm={true} />
-            <MenuItemFunc to="/statics" iconSrc="/images/sidebar/statics.png" text="통계 지표" hasAlarm={false} />
-            <MenuItemFunc to="/payment" iconSrc="/images/sidebar/payment.png" text="결제 통계" hasAlarm={false} />
-            <MenuItemFunc to="/admin" iconSrc="/images/sidebar/admin.png" text="관리자 계정" hasAlarm={false} />
-            <MenuItemFunc to="/chatting-session" iconSrc="/images/sidebar/chatting-session.png" text="채팅방 세션" hasAlarm={false} />
-            <MenuItemFunc to="/inquiry" iconSrc="/images/sidebar/inquiry.png" text="고객 문의" hasAlarm={true} />
-            <MenuItemFunc to="/setting" iconSrc="/images/sidebar/setting.png" text="설정" hasAlarm={false} />
+            <MenuItemFunc to="/dashboard" iconSrc="/images/sidebar/dashboard.png" activeIconSrc="/images/sidebar/dashboard-active.png" text="대시 보드" hasAlarm={false} />
+            <MenuItemFunc to="/user-info" iconSrc="/images/sidebar/user-info.png" activeIconSrc="/images/sidebar/user-info-active.png" text="회원 정보" hasAlarm={false} />
+            <MenuItemFunc to="/cs" iconSrc="/images/sidebar/cs.png" activeIconSrc="/images/sidebar/cs-active.png" text="CS관리" hasAlarm={true} />
+            <MenuItemFunc to="/statics" iconSrc="/images/sidebar/statics.png" activeIconSrc="/images/sidebar/statics-active.png" text="통계 지표" hasAlarm={false} />
+            <MenuItemFunc to="/payment" iconSrc="/images/sidebar/payment.png" activeIconSrc="/images/sidebar/payment-active.png" text="결제 통계" hasAlarm={false} />
+            <MenuItemFunc to="/admin" iconSrc="/images/sidebar/admin.png" activeIconSrc="/images/sidebar/admin-active.png" text="관리자 계정" hasAlarm={false} />
+            <MenuItemFunc to="/chatting-session" iconSrc="/images/sidebar/chatting-session.png" activeIconSrc="/images/sidebar/chatting-session-active.png" text="채팅방 세션" hasAlarm={false} />
+            <MenuItemFunc to="/inquiry" iconSrc="/images/sidebar/inquiry.png" activeIconSrc="/images/sidebar/inquiry-active.png" text="고객 문의" hasAlarm={true} />
+            <MenuItemFunc to="/setting" iconSrc="/images/sidebar/setting.png" activeIconSrc="/images/sidebar/setting-active.png" text="설정" hasAlarm={false} />
           </MenuItems>
         </ToggleTopWrap>
         {/* TODO: 관리자 정보 이름 연결 */}
         <ToggleBottomWrap>
           <AdminInfoWrap>
-            <InfoCenterWrap>
+            <InfoCenterWrap className={isSidebarCollapsed ? "" : "active"}>
               <AdminName>관리자1</AdminName>
               <AdminEmail>thor@naver.com</AdminEmail>
             </InfoCenterWrap>
