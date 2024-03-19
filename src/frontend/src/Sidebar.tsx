@@ -1,11 +1,13 @@
-import { Outlet, useLocation } from "react-router-dom";
-import styled from "styled-components";
-import { NavLink } from "react-router-dom";
-import { useState } from "react";
+import { Outlet, useLocation } from 'react-router-dom';
+import styled from 'styled-components';
+import { NavLink } from 'react-router-dom';
+import { useState } from 'react';
 
 // BEGIN: Style Component
 const SidebarWrap = styled.div`
-  width: 350px;
+  width: 290px;
+  flex: 1 0 auto;
+  position: relative;
   height: calc(100vh - 79px);
   padding: 44px 28px 35px 32px;
   border-top-right-radius: 25px;
@@ -172,29 +174,83 @@ export default function Sidebar() {
   }
 
   return (
-    <SidebarWrap className={isSidebarCollapsed ? "animation" : ""}>
+    <SidebarWrap className={isSidebarCollapsed ? 'animation' : ''}>
       <MenuToggleBtn onClick={toggleSidebar}>
         <ToggleBtnImg src="/images/sidebar/menu_btn.png" />
       </MenuToggleBtn>
-      <MenuToggleWrap className={isSidebarCollapsed ? "animation" : ""}>
+      <MenuToggleWrap className={isSidebarCollapsed ? 'animation' : ''}>
         <ToggleTopWrap>
           <TopTitle>MENU</TopTitle>
           <MenuItems>
-            <MenuItemFunc to="/dashboard" iconSrc="/images/sidebar/dashboard.png" activeIconSrc="/images/sidebar/dashboard-active.png" text="대시 보드" hasAlarm={false} />
-            <MenuItemFunc to="/user-info" iconSrc="/images/sidebar/user-info.png" activeIconSrc="/images/sidebar/user-info-active.png" text="회원 정보" hasAlarm={false} />
-            <MenuItemFunc to="/cs" iconSrc="/images/sidebar/cs.png" activeIconSrc="/images/sidebar/cs-active.png" text="CS관리" hasAlarm={true} />
-            <MenuItemFunc to="/statics" iconSrc="/images/sidebar/statics.png" activeIconSrc="/images/sidebar/statics-active.png" text="통계 지표" hasAlarm={false} />
-            <MenuItemFunc to="/payment" iconSrc="/images/sidebar/payment.png" activeIconSrc="/images/sidebar/payment-active.png" text="결제 통계" hasAlarm={false} />
-            <MenuItemFunc to="/admin" iconSrc="/images/sidebar/admin.png" activeIconSrc="/images/sidebar/admin-active.png" text="관리자 계정" hasAlarm={false} />
-            <MenuItemFunc to="/chatting-session" iconSrc="/images/sidebar/chatting-session.png" activeIconSrc="/images/sidebar/chatting-session-active.png" text="채팅방 세션" hasAlarm={false} />
-            <MenuItemFunc to="/inquiry" iconSrc="/images/sidebar/inquiry.png" activeIconSrc="/images/sidebar/inquiry-active.png" text="고객 문의" hasAlarm={true} />
-            <MenuItemFunc to="/setting" iconSrc="/images/sidebar/setting.png" activeIconSrc="/images/sidebar/setting-active.png" text="설정" hasAlarm={false} />
+            <MenuItemFunc
+              to="/dashboard"
+              iconSrc="/images/sidebar/dashboard.png"
+              activeIconSrc="/images/sidebar/dashboard-active.png"
+              text="대시 보드"
+              hasAlarm={false}
+            />
+            <MenuItemFunc
+              to="/user-info"
+              iconSrc="/images/sidebar/user-info.png"
+              activeIconSrc="/images/sidebar/user-info-active.png"
+              text="회원 정보"
+              hasAlarm={false}
+            />
+            <MenuItemFunc
+              to="/cs"
+              iconSrc="/images/sidebar/cs.png"
+              activeIconSrc="/images/sidebar/cs-active.png"
+              text="CS관리"
+              hasAlarm={true}
+            />
+            <MenuItemFunc
+              to="/statics"
+              iconSrc="/images/sidebar/statics.png"
+              activeIconSrc="/images/sidebar/statics-active.png"
+              text="통계 지표"
+              hasAlarm={false}
+            />
+            <MenuItemFunc
+              to="/payment"
+              iconSrc="/images/sidebar/payment.png"
+              activeIconSrc="/images/sidebar/payment-active.png"
+              text="결제 통계"
+              hasAlarm={false}
+            />
+            <MenuItemFunc
+              to="/admin"
+              iconSrc="/images/sidebar/admin.png"
+              activeIconSrc="/images/sidebar/admin-active.png"
+              text="관리자 계정"
+              hasAlarm={false}
+            />
+            <MenuItemFunc
+              to="/chatting-session"
+              iconSrc="/images/sidebar/chatting-session.png"
+              activeIconSrc="/images/sidebar/chatting-session-active.png"
+              text="채팅방 세션"
+              hasAlarm={false}
+            />
+            <MenuItemFunc
+              to="/inquiry"
+              iconSrc="/images/sidebar/inquiry.png"
+              activeIconSrc="/images/sidebar/inquiry-active.png"
+              text="고객 문의"
+              hasAlarm={true}
+            />
+            <MenuItemFunc
+              to="/setting"
+              iconSrc="/images/sidebar/setting.png"
+              activeIconSrc="/images/sidebar/setting-active.png"
+              text="설정"
+              hasAlarm={false}
+            />
           </MenuItems>
         </ToggleTopWrap>
         {/* TODO: 관리자 정보 이름 연결 */}
         <ToggleBottomWrap>
           <AdminInfoWrap>
-            <InfoCenterWrap className={isSidebarCollapsed ? "" : "active"}>
+            <InfoCenterWrap className={isSidebarCollapsed ? '' : 'active'}>
               <AdminName>관리자1</AdminName>
               <AdminEmail>thor@naver.com</AdminEmail>
             </InfoCenterWrap>
