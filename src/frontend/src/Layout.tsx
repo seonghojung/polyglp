@@ -1,13 +1,28 @@
 import { Outlet } from "react-router-dom";
 import Sidebar from "./Sidebar";
+import { styled } from "styled-components";
+
+const Wrap = styled.div`
+  display: flex;
+  background-color: #e8e9eb;
+`;
+
+const Header = styled.header`
+  height: 199px;
+`;
+
+const Body = styled.div`
+  width: 100%;
+`;
+
 export default function Layout() {
   return (
-    <div>
+    <Wrap>
       <Sidebar />
-      <header>헤더</header>
-      <Outlet />
-      <footer>푸터</footer>
-    </div>
+      <Body>
+        <Outlet />
+      </Body>
+    </Wrap>
   );
 }
 
