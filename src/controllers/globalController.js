@@ -3,6 +3,8 @@ import routes from "../routes";
 // 홈 Home
 export const home = async (req, res) => {
   try {
+    // 폴글 디비로 가고
+    // 반환
     res.render("home");
   } catch (err) {
     console.log(err);

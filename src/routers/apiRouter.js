@@ -1,11 +1,9 @@
 import express from "express";
-// import {} from "../controllers/apiController";
-import { uploadSampleDescImg } from "../middlewares";
+import { postCheckAlarmCount } from "../controllers/apiController";
 
 const apiRouter = express.Router();
 
-apiRouter.post("/create/sample-desc-img", uploadSampleDescImg, (req, res) => {
-  res.send(req.file.location);
-});
+// cs, 고객문의 미처리건
+apiRouter.post("/check-alarm-count", postCheckAlarmCount);
 
 export default apiRouter;
