@@ -2,6 +2,7 @@ import { Outlet, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { BASE_URL } from "./App";
 
 // BEGIN: Style Component
 const SidebarWrap = styled.div`
@@ -167,12 +168,11 @@ export default function Sidebar() {
   // cs, 고객문의 미처리건
   useEffect(() => {
     // postCheckAlarmCount
-    console.log(process.env.BACKEND_URL);
 
     const fetchData = async () => {
       try {
         // API 컨트롤러의 특정 함수를 호출합니다.
-        const response = await fetch(`http://localhost:8080/api/check-alarm-count`, { method: "POST" });
+        const response = await fetch(`${BASE_URL}/api/check-alarm-count`, { method: "POST" });
         console.log(response);
 
         if (response.ok) {
@@ -193,13 +193,31 @@ export default function Sidebar() {
 
   // 사이드바 메뉴
   const menuItems: IMenuItemFunc[] = [
-    { to: "/dashboard", iconSrc: "/images/sidebar/dashboard.png", activeIconSrc: "/images/sidebar/dashboard-active.png", text: "대시 보드", alarmCount: 0 },
-    { to: "/user-info", iconSrc: "/images/sidebar/user-info.png", activeIconSrc: "/images/sidebar/user-info-active.png", text: "회원 정보", alarmCount: 0 },
+    {
+      to: "/dashboard",
+      iconSrc: "/images/sidebar/dashboard.png",
+      activeIconSrc: "/images/sidebar/dashboard-active.png",
+      text: "대시 보드",
+      alarmCount: 0,
+    },
+    {
+      to: "/user-info",
+      iconSrc: "/images/sidebar/user-info.png",
+      activeIconSrc: "/images/sidebar/user-info-active.png",
+      text: "회원 정보",
+      alarmCount: 0,
+    },
     { to: "/cs", iconSrc: "/images/sidebar/cs.png", activeIconSrc: "/images/sidebar/cs-active.png", text: "CS관리", alarmCount: 0 },
     { to: "/statics", iconSrc: "/images/sidebar/statics.png", activeIconSrc: "/images/sidebar/statics-active.png", text: "통계 지표", alarmCount: 0 },
     { to: "/payment", iconSrc: "/images/sidebar/payment.png", activeIconSrc: "/images/sidebar/payment-active.png", text: "결제 통계", alarmCount: 0 },
     { to: "/admin", iconSrc: "/images/sidebar/admin.png", activeIconSrc: "/images/sidebar/admin-active.png", text: "관리자 계정", alarmCount: 0 },
-    { to: "/chatting-session", iconSrc: "/images/sidebar/chatting-session.png", activeIconSrc: "/images/sidebar/chatting-session-active.png", text: "채팅방 세션", alarmCount: 0 },
+    {
+      to: "/chatting-session",
+      iconSrc: "/images/sidebar/chatting-session.png",
+      activeIconSrc: "/images/sidebar/chatting-session-active.png",
+      text: "채팅방 세션",
+      alarmCount: 0,
+    },
     { to: "/inquiry", iconSrc: "/images/sidebar/inquiry.png", activeIconSrc: "/images/sidebar/inquiry-active.png", text: "고객 문의", alarmCount: 0 },
     { to: "/setting", iconSrc: "/images/sidebar/setting.png", activeIconSrc: "/images/sidebar/setting-active.png", text: "설정", alarmCount: 0 },
   ];
@@ -217,7 +235,14 @@ export default function Sidebar() {
           <TopTitle>MENU</TopTitle>
           <MenuItems>
             {menuItems.map((item, index) => (
-              <MenuItemFunc key={index} to={item.to} iconSrc={item.iconSrc} activeIconSrc={item.activeIconSrc} text={item.text} alarmCount={item.alarmCount} />
+              <MenuItemFunc
+                key={index}
+                to={item.to}
+                iconSrc={item.iconSrc}
+                activeIconSrc={item.activeIconSrc}
+                text={item.text}
+                alarmCount={item.alarmCount}
+              />
             ))}
           </MenuItems>
         </ToggleTopWrap>

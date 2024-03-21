@@ -1,7 +1,7 @@
 import "core-js/stable";
 import "regenerator-runtime/runtime";
 import express from "express";
-
+import cors from "cors";
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
 import passport from "passport";
@@ -15,6 +15,11 @@ import "./passport";
 
 const app = express();
 
+const isDevMode = process.env.mode === "dev";
+if (isDevMode) {
+  app.use(cors());
+  app.set("trust proxy", 1);
+}
 app.use(cookieParser());
 app.use(
   bodyParser.json({
@@ -23,7 +28,7 @@ app.use(
 );
 app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 app.use(morgan("dev"));
-app.set("trust proxy", 1); // 개발용 @TODO: 추후 제거
+
 app.use(
   session({
     secret: process.env.COOKIE_SECRET,
@@ -66,10 +71,16 @@ app.get("/ping", (req, res, next) => {
   res.end("pong");
 });
 
-app.use(express.static(path.join(__dirname, "frontend/build")));
+if (isDevMode) {
+  app.use((_, res) => {
+    res.status(405).json({ message: "일치하는 메서드를 찾지 못했습니다." });
+  });
+}
+
+app.use(express.static(path.join(__dirname, "public")));
 
 app.use("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "/frontend/build/index.html"));
+  res.sendFile(path.join(__dirname, "public/index.html"));
 });
 
 export default app;
