@@ -9,7 +9,7 @@ import CsPage from "./pages/cs/page";
 import CsDetailPage from "./pages/cs/cs-detail/page";
 import AdminPage from "./pages/admin/page";
 import AdminCreatePage from "./pages/admin/create/page";
-import PaymentsPage from "./pages/payments/page";
+import PaymentPage from "./pages/payment/page";
 import StaticsPage from "./pages/statics/page";
 import SettingPage from "./pages/setting/page";
 import InquiryPage from "./pages/inquiry/page";
@@ -84,8 +84,8 @@ export const router = createBrowserRouter([
       },
       // 결제 통계
       {
-        path: "payments",
-        element: <PaymentsPage />,
+        path: "payment",
+        element: <PaymentPage />,
       },
       // 관리자 계정
       {

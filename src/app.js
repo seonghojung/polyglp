@@ -1,14 +1,13 @@
 import "core-js/stable";
 import "regenerator-runtime/runtime";
-import express from "express";
 import cors from "cors";
+import express from "express";
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
 import passport from "passport";
 import session from "express-session";
 import path from "path";
 import morgan from "morgan";
-
 import apiRouter from "./routers/apiRouter";
 import pool from "./db";
 import "./passport";
@@ -81,7 +80,7 @@ if (isDevMode) {
 
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use("*", (req, res) => {
+app.use("*", (_, res) => {
   res.sendFile(path.join(__dirname, "public/index.html"));
 });
 

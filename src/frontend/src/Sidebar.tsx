@@ -235,14 +235,7 @@ export default function Sidebar() {
           <TopTitle>MENU</TopTitle>
           <MenuItems>
             {menuItems.map((item, index) => (
-              <MenuItemFunc
-                key={index}
-                to={item.to}
-                iconSrc={item.iconSrc}
-                activeIconSrc={item.activeIconSrc}
-                text={item.text}
-                alarmCount={item.alarmCount}
-              />
+              <MenuItemFunc key={index} to={item.to} iconSrc={item.iconSrc} activeIconSrc={item.activeIconSrc} text={item.text} alarmCount={item.alarmCount} />
             ))}
           </MenuItems>
         </ToggleTopWrap>
