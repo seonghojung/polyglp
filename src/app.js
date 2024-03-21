@@ -9,7 +9,7 @@ import session from "express-session";
 import path from "path";
 import morgan from "morgan";
 
-// import authRouter from "./routers/authRouter";
+import apiRouter from "./routers/apiRouter";
 import pool from "./db";
 import "./passport";
 
@@ -76,6 +76,8 @@ if (isDevMode) {
     res.status(405).json({ message: "일치하는 메서드를 찾지 못했습니다." });
   });
 }
+
+app.use("/api", apiRouter);
 
 app.use(express.static(path.join(__dirname, "public")));
 
