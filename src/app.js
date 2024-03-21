@@ -71,13 +71,13 @@ app.get("/ping", (req, res, next) => {
   res.end("pong");
 });
 
+app.use("/api", apiRouter);
+
 if (isDevMode) {
   app.use((_, res) => {
     res.status(405).json({ message: "일치하는 메서드를 찾지 못했습니다." });
   });
 }
-
-app.use("/api", apiRouter);
 
 app.use(express.static(path.join(__dirname, "public")));
 
