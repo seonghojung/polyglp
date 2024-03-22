@@ -1,14 +1,16 @@
 import routes from "../routes";
 import pool from "../db";
 
-// 홈 Home
-export const postCheckAlarmCount = async (req, res) => {
+// 관리자 정보, cs, 고객문의 미처리건
+export const postSidebarInfos = async (req, res) => {
   try {
+    // TODO: 로그인한 관리자 정보 받아오기
     let evilReportAlarmCount = 0;
     let qnaAlarmCount = 0;
 
     const evilReportsQuery = "SELECT * FROM evil_reports";
     const qnaQuery = "SELECT * FROM qna";
+    const loginLogQuery = "SELECT * FROM login_logs";
 
     const poolQueryFunc = (query, type) => {
       pool.query(query, (err, result) => {
@@ -36,6 +38,7 @@ export const postCheckAlarmCount = async (req, res) => {
 
     poolQueryFunc(evilReportsQuery, "evilReports");
     poolQueryFunc(qnaQuery, "qna");
+    poolQueryFunc(loginLogQuery, "loginLog");
 
     res.status(200).json({ msg: "success", evilReportAlarmCount, qnaAlarmCount });
   } catch (err) {

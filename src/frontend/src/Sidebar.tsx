@@ -163,16 +163,17 @@ export default function Sidebar() {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false); // 사이드바 collapse
   const [evilReportAlarmCount, setEvilReportAlarmCount] = useState(0);
   const [qnaAlarmCount, setQnaAlarmCount] = useState(0);
-  // cs, 고객문의 미처리건
+  // 관리자 정보, cs, 고객문의 미처리건
   useEffect(() => {
-    // postCheckAlarmCount
+    // postSidebarInfos
 
     const fetchData = async () => {
       try {
         // API 컨트롤러의 특정 함수를 호출합니다.
-        const response = await fetch(`${BASE_URL}/api/check-alarm-count`, { method: "POST" });
+        const response = await fetch(`${BASE_URL}/api/sidebar-infos`, { method: "POST" });
         if (response.ok) {
           const responseData = await response.json();
+          // TODO: 로그인한 관리자 정보 받아오기
           const { evilReportAlarmCount, qnaAlarmCount } = responseData;
           setEvilReportAlarmCount(evilReportAlarmCount);
           setQnaAlarmCount(qnaAlarmCount);
@@ -184,7 +185,7 @@ export default function Sidebar() {
     };
     fetchData();
   }, []);
-  // const [alarmCount, setAlarmCount] = useEffect([]);
+
   function toggleSidebar() {
     setIsSidebarCollapsed(!isSidebarCollapsed);
   }
