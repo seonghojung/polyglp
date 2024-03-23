@@ -9,7 +9,7 @@ import session from "express-session";
 import path from "path";
 import morgan from "morgan";
 import apiRouter from "./routers/apiRouter";
-import pool from "./db";
+
 import "./passport";
 
 const app = express();
@@ -40,20 +40,6 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.get("/users", (req, res) => {
-  const query = "SELECT * FROM users";
-
-  pool.query(query, (err, result) => {
-    if (err) {
-      console.error("Error executing query", err);
-      res.status(500).send("Error executing query");
-      return;
-    }
-
-    res.json(result.rows);
-  });
-});
-
 // 세션 작동테스트
 app.get("/test", (req, res, next) => {
   if (req.session.views) {
@@ -66,7 +52,7 @@ app.get("/test", (req, res, next) => {
 });
 
 // ping
-app.get("/ping", (req, res, next) => {
+app.get("/ping", (req, res) => {
   res.end("pong");
 });
 

@@ -3,6 +3,7 @@ import routes from "../routes";
 // 홈 Home
 export const postCheckAlarmCount = async (req, res) => {
   try {
+    console.log(req.user);
     // console.log(body);
 
     // TODO: json 반환 처리에대한 코드 통일

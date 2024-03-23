@@ -172,7 +172,7 @@ export default function Sidebar() {
     const fetchData = async () => {
       try {
         // API 컨트롤러의 특정 함수를 호출합니다.
-        const response = await fetch(`${BASE_URL}/api/check-alarm-count`, { method: "POST" });
+        const response = await fetch(`${BASE_URL}/api/check-alarm-count`, { method: "POST", credentials: "include" });
         console.log(response);
 
         if (response.ok) {
@@ -235,7 +235,14 @@ export default function Sidebar() {
           <TopTitle>MENU</TopTitle>
           <MenuItems>
             {menuItems.map((item, index) => (
-              <MenuItemFunc key={index} to={item.to} iconSrc={item.iconSrc} activeIconSrc={item.activeIconSrc} text={item.text} alarmCount={item.alarmCount} />
+              <MenuItemFunc
+                key={index}
+                to={item.to}
+                iconSrc={item.iconSrc}
+                activeIconSrc={item.activeIconSrc}
+                text={item.text}
+                alarmCount={item.alarmCount}
+              />
             ))}
           </MenuItems>
         </ToggleTopWrap>
