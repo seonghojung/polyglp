@@ -51,7 +51,6 @@ const TopTitle = styled.p`
   color: #92929d;
   margin-top: 33px;
 `;
-
 const MenuItems = styled.div`
   margin-top: 48px;
 `;
@@ -88,7 +87,6 @@ const ItemLeftWrap = styled.div`
   display: flex;
   align-items: center;
 `;
-
 const ItemText = styled.p`
   margin-left: 20px;
 `;
@@ -106,7 +104,6 @@ const ItemAlarm = styled.div`
 `;
 const AdminInfoWrap = styled.div``;
 const InfoCenterWrap = styled.div``;
-
 const AdminName = styled.p`
   font-size: 18px;
   font-weight: 500;
@@ -156,8 +153,7 @@ const MenuItemFunc: React.FC<IMenuItemFunc> = ({ to, iconSrc, activeIconSrc, tex
           <ItemIcon src={isActive ? activeIconSrc : iconSrc} />
           <ItemText>{text}</ItemText>
         </ItemLeftWrap>
-        {/* TODO: 미처리, 미확인건 수치 연동 */}
-        {alarmCount > 0 && <ItemAlarm>123</ItemAlarm>}
+        {alarmCount > 0 && <ItemAlarm>{alarmCount}</ItemAlarm>}
       </Link>
     </MenuItem>
   );
@@ -165,19 +161,22 @@ const MenuItemFunc: React.FC<IMenuItemFunc> = ({ to, iconSrc, activeIconSrc, tex
 
 export default function Sidebar() {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false); // 사이드바 collapse
-  // cs, 고객문의 미처리건
+  const [evilReportAlarmCount, setEvilReportAlarmCount] = useState(0);
+  const [qnaAlarmCount, setQnaAlarmCount] = useState(0);
+  // 관리자 정보, cs, 고객문의 미처리건
   useEffect(() => {
-    // postCheckAlarmCount
+    // postSidebarInfos
 
     const fetchData = async () => {
       try {
         // API 컨트롤러의 특정 함수를 호출합니다.
-        const response = await fetch(`${BASE_URL}/api/check-alarm-count`, { method: "POST", credentials: "include" });
-        console.log(response);
-
+        const response = await fetch(`${BASE_URL}/api/sidebar-infos`, { method: "POST", credentials: "include" });
         if (response.ok) {
           const responseData = await response.json();
-          console.log(responseData);
+          // TODO: 로그인한 관리자 정보 받아오기
+          const { evilReportAlarmCount, qnaAlarmCount } = responseData;
+          setEvilReportAlarmCount(evilReportAlarmCount);
+          setQnaAlarmCount(qnaAlarmCount);
         }
       } catch (error) {
         // 오류 처리를 수행합니다.
@@ -186,7 +185,7 @@ export default function Sidebar() {
     };
     fetchData();
   }, []);
-  // const [alarmCount, setAlarmCount] = useEffect([]);
+
   function toggleSidebar() {
     setIsSidebarCollapsed(!isSidebarCollapsed);
   }
@@ -207,7 +206,13 @@ export default function Sidebar() {
       text: "회원 정보",
       alarmCount: 0,
     },
-    { to: "/cs", iconSrc: "/images/sidebar/cs.png", activeIconSrc: "/images/sidebar/cs-active.png", text: "CS관리", alarmCount: 0 },
+    {
+      to: "/cs",
+      iconSrc: "/images/sidebar/cs.png",
+      activeIconSrc: "/images/sidebar/cs-active.png",
+      text: "CS관리",
+      alarmCount: evilReportAlarmCount,
+    },
     { to: "/statics", iconSrc: "/images/sidebar/statics.png", activeIconSrc: "/images/sidebar/statics-active.png", text: "통계 지표", alarmCount: 0 },
     { to: "/payment", iconSrc: "/images/sidebar/payment.png", activeIconSrc: "/images/sidebar/payment-active.png", text: "결제 통계", alarmCount: 0 },
     { to: "/admin", iconSrc: "/images/sidebar/admin.png", activeIconSrc: "/images/sidebar/admin-active.png", text: "관리자 계정", alarmCount: 0 },
@@ -218,7 +223,13 @@ export default function Sidebar() {
       text: "채팅방 세션",
       alarmCount: 0,
     },
-    { to: "/inquiry", iconSrc: "/images/sidebar/inquiry.png", activeIconSrc: "/images/sidebar/inquiry-active.png", text: "고객 문의", alarmCount: 0 },
+    {
+      to: "/inquiry",
+      iconSrc: "/images/sidebar/inquiry.png",
+      activeIconSrc: "/images/sidebar/inquiry-active.png",
+      text: "고객 문의",
+      alarmCount: qnaAlarmCount,
+    },
     { to: "/setting", iconSrc: "/images/sidebar/setting.png", activeIconSrc: "/images/sidebar/setting-active.png", text: "설정", alarmCount: 0 },
   ];
 

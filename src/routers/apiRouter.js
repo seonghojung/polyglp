@@ -1,12 +1,12 @@
 import passport from "passport";
 import express from "express";
-import { postCheckAlarmCount } from "../controllers/apiController";
+import { postSidebarInfos } from "../controllers/apiController";
 import client from "../db";
 
 const apiRouter = express.Router();
 
-// cs, 고객문의 미처리건
-apiRouter.post("/check-alarm-count", postCheckAlarmCount);
+// 관리자 정보, cs, 고객문의 미처리건
+apiRouter.post("/sidebar-infos", postSidebarInfos);
 
 // 전체 유저 조회
 apiRouter.get("/getUsers", async (req, res) => {
