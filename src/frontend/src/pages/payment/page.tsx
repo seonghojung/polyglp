@@ -6,15 +6,51 @@ import { useState } from "react";
 import TableHeader from "../cs/components/TableHeader";
 
 const rows: GridRowsProp = [
-  { id: 1, col1: "Hello", col2: "World", col3: "asdasd@naver.com" },
-  { id: 2, col1: "DataGridPro", col2: "is Awesome", col3: "asdasd@naver.com" },
-  { id: 3, col1: "MUI", col2: "is Amazing", col3: "asdasd@naver.com" },
+  { id: 1, 닉네임: "닉네임", 아이디: "아이디", "구독 상태": "구독 상태", "구독 기간": "구독 기간", "구독 종류": "구독 종류", "결제 방식": "결제 방식" },
+  { id: 2, 닉네임: "닉네임", 아이디: "아이디", "구독 상태": "구독 상태", "구독 기간": "구독 기간", "구독 종류": "구독 종류", "결제 방식": "결제 방식" },
+  { id: 3, 닉네임: "닉네임", 아이디: "아이디", "구독 상태": "구독 상태", "구독 기간": "구독 기간", "구독 종류": "구독 종류", "결제 방식": "결제 방식" },
+  { id: 4, 닉네임: "닉네임", 아이디: "아이디", "구독 상태": "구독 상태", "구독 기간": "구독 기간", "구독 종류": "구독 종류", "결제 방식": "결제 방식" },
+  { id: 5, 닉네임: "닉네임", 아이디: "아이디", "구독 상태": "구독 상태", "구독 기간": "구독 기간", "구독 종류": "구독 종류", "결제 방식": "결제 방식" },
+  { id: 6, 닉네임: "닉네임", 아이디: "아이디", "구독 상태": "구독 상태", "구독 기간": "구독 기간", "구독 종류": "구독 종류", "결제 방식": "결제 방식" },
+  { id: 7, 닉네임: "닉네임", 아이디: "아이디", "구독 상태": "구독 상태", "구독 기간": "구독 기간", "구독 종류": "구독 종류", "결제 방식": "결제 방식" },
+  { id: 8, 닉네임: "닉네임", 아이디: "아이디", "구독 상태": "구독 상태", "구독 기간": "구독 기간", "구독 종류": "구독 종류", "결제 방식": "결제 방식" },
+  { id: 9, 닉네임: "닉네임", 아이디: "아이디", "구독 상태": "구독 상태", "구독 기간": "구독 기간", "구독 종류": "구독 종류", "결제 방식": "결제 방식" },
+  { id: 10, 닉네임: "닉네임", 아이디: "아이디", "구독 상태": "구독 상태", "구독 기간": "구독 기간", "구독 종류": "구독 종류", "결제 방식": "결제 방식" },
+  { id: 11, 닉네임: "닉네임", 아이디: "아이디", "구독 상태": "구독 상태", "구독 기간": "구독 기간", "구독 종류": "구독 종류", "결제 방식": "결제 방식" },
+  { id: 12, 닉네임: "닉네임", 아이디: "아이디", "구독 상태": "구독 상태", "구독 기간": "구독 기간", "구독 종류": "구독 종류", "결제 방식": "결제 방식" },
+  { id: 13, 닉네임: "닉네임", 아이디: "아이디", "구독 상태": "구독 상태", "구독 기간": "구독 기간", "구독 종류": "구독 종류", "결제 방식": "결제 방식" },
 ];
 
 const columns: GridColDef[] = [
-  { field: "col1", headerName: "Column 1", width: 150 },
-  { field: "col2", headerName: "Column 2", width: 150 },
-  { field: "col3", headerName: "Column 3", width: 150 },
+  { field: "닉네임", headerName: "닉네임", width: 150 },
+  { field: "아이디", headerName: "아이디", width: 150 },
+  { field: "구독 상태", headerName: "구독 상태", width: 200 },
+  { field: "구독 기간", headerName: "구독 기간", width: 200 },
+  {
+    field: "구독 상태 조정",
+    headerName: "구독 상태 조정",
+    width: 300,
+    renderCell: (rows) => (
+      <button
+        onClick={() => {
+          alert(`${rows.id}번쨰 구독 상태 조정 버튼`);
+        }}
+      >
+        ▼구독 중
+      </button>
+    ),
+  },
+  { field: "구독 종류", headerName: "구독 종류", width: 150 },
+  { field: "결제 방식", headerName: "결제 방식", width: 150 },
+  {
+    field: "회원 상세",
+    headerName: "회원 상세",
+    width: 100,
+    renderCell: (rows) => (
+      //TODO. 회원 상세 페이지로 이동
+      <a href={"/user-info/111"}>확인하기</a>
+    ),
+  },
 ];
 
 const TopContent = styled.div`
@@ -36,7 +72,7 @@ export default function PaymentsPage() {
           <div style={{ height: "118px", textAlign: "center", paddingTop: "100px" }}>상단 컨텐츠 영역</div>
         </TopContent>
         <BodyContent>
-          <div style={{ height: 300, width: "100%" }}>
+          <div style={{ width: "100%" }}>
             <DataGrid
               sx={{
                 "& .MuiDataGrid-cell:focus-within, &.MuiDataGrid-cell:focus": {

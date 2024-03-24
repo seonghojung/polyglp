@@ -4,15 +4,44 @@ import { DataGrid, GridColDef, GridRowsProp } from "@mui/x-data-grid";
 import { useState } from "react";
 
 const rows: GridRowsProp = [
-  { id: 1, col1: "Hello", col2: "World", col3: "asdasd@naver.com" },
-  { id: 2, col1: "DataGridPro", col2: "is Awesome", col3: "asdasd@naver.com" },
-  { id: 3, col1: "MUI", col2: "is Amazing", col3: "asdasd@naver.com" },
+  { id: 1, "문의 종류": "문의종류", 이름: "이름", 이메일: "이메일", 전화번호: "전화번호", 내용: "내용", "답변 내용": "답변내용", 상태: "상태", 등록일시: "등록일시" },
+  { id: 2, "문의 종류": "문의종류", 이름: "이름", 이메일: "이메일", 전화번호: "전화번호", 내용: "내용", "답변 내용": "답변내용", 상태: "상태", 등록일시: "등록일시" },
+  { id: 3, "문의 종류": "문의종류", 이름: "이름", 이메일: "이메일", 전화번호: "전화번호", 내용: "내용", "답변 내용": "답변내용", 상태: "상태", 등록일시: "등록일시" },
+  { id: 4, "문의 종류": "문의종류", 이름: "이름", 이메일: "이메일", 전화번호: "전화번호", 내용: "내용", "답변 내용": "답변내용", 상태: "상태", 등록일시: "등록일시" },
+  { id: 5, "문의 종류": "문의종류", 이름: "이름", 이메일: "이메일", 전화번호: "전화번호", 내용: "내용", "답변 내용": "답변내용", 상태: "상태", 등록일시: "등록일시" },
+  { id: 6, "문의 종류": "문의종류", 이름: "이름", 이메일: "이메일", 전화번호: "전화번호", 내용: "내용", "답변 내용": "답변내용", 상태: "상태", 등록일시: "등록일시" },
+  { id: 7, "문의 종류": "문의종류", 이름: "이름", 이메일: "이메일", 전화번호: "전화번호", 내용: "내용", "답변 내용": "답변내용", 상태: "상태", 등록일시: "등록일시" },
+  { id: 8, "문의 종류": "문의종류", 이름: "이름", 이메일: "이메일", 전화번호: "전화번호", 내용: "내용", "답변 내용": "답변내용", 상태: "상태", 등록일시: "등록일시" },
+  { id: 9, "문의 종류": "문의종류", 이름: "이름", 이메일: "이메일", 전화번호: "전화번호", 내용: "내용", "답변 내용": "답변내용", 상태: "상태", 등록일시: "등록일시" },
+  { id: 10, "문의 종류": "문의종류", 이름: "이름", 이메일: "이메일", 전화번호: "전화번호", 내용: "내용", "답변 내용": "답변내용", 상태: "상태", 등록일시: "등록일시" },
+  { id: 11, "문의 종류": "문의종류", 이름: "이름", 이메일: "이메일", 전화번호: "전화번호", 내용: "내용", "답변 내용": "답변내용", 상태: "상태", 등록일시: "등록일시" },
+  { id: 12, "문의 종류": "문의종류", 이름: "이름", 이메일: "이메일", 전화번호: "전화번호", 내용: "내용", "답변 내용": "답변내용", 상태: "상태", 등록일시: "등록일시" },
+  { id: 13, "문의 종류": "문의종류", 이름: "이름", 이메일: "이메일", 전화번호: "전화번호", 내용: "내용", "답변 내용": "답변내용", 상태: "상태", 등록일시: "등록일시" },
 ];
 
 const columns: GridColDef[] = [
-  { field: "col1", headerName: "Column 1", width: 150 },
-  { field: "col2", headerName: "Column 2", width: 150 },
-  { field: "col3", headerName: "Column 3", width: 150 },
+  { field: "문의 종류", headerName: "문의 종류", width: 100 },
+  { field: "이름", headerName: "이름", width: 100 },
+  { field: "이메일", headerName: "이메일", width: 150 },
+  { field: "전화번호", headerName: "전화번호", width: 150 },
+  { field: "내용", headerName: "내용", width: 200 },
+  { field: "답변 내용", headerName: "답변 내용", width: 200 },
+  { field: "상태", headerName: "상태", width: 100 },
+  { field: "등록일시", headerName: "등록일시", width: 150 },
+  {
+    field: "답변하기",
+    headerName: "답변하기",
+    width: 100,
+    renderCell: (rows) => (
+      <button
+        onClick={() => {
+          alert(`${rows.id}번쨰 답변하기 버튼`);
+        }}
+      >
+        답변하기
+      </button>
+    ),
+  },
 ];
 
 const TopContent = styled.div`
@@ -33,7 +62,7 @@ export default function InquiryPage() {
       <>
         <TopContent></TopContent>
         <BodyContent>
-          <div style={{ height: 300, width: "100%" }}>
+          <div style={{ width: "100%" }}>
             <DataGrid
               sx={{
                 "& .MuiDataGrid-cell:focus-within, &.MuiDataGrid-cell:focus": {
