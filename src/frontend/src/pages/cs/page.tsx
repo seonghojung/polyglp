@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Templete from "../components/Templete";
+import Template from "../components/Template";
 import Divider from "@mui/material/Divider";
 import { DataGrid, GridColDef, GridRowsProp } from "@mui/x-data-grid";
 import { useState } from "react";
@@ -118,7 +118,7 @@ export default function CsPage() {
   // WBS : CS 관리
   const [paginationModel, setPaginationModel] = useState({ page: 0, pageSize: 10 });
   return (
-    <Templete title="CS관리">
+    <Template title="CS관리">
       <Wrap>
         <Inner>
           <TopContent>
@@ -162,6 +162,6 @@ export default function CsPage() {
           </BodyContent>
         </Inner>
       </Wrap>
-    </Templete>
+    </Template>
   );
 }

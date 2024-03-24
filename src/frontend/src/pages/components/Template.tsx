@@ -31,7 +31,7 @@ const Inner = styled.div`
   padding: 0 47px;
 `;
 
-const Templete = ({ children, title }: { children: React.ReactElement; title: string }) => {
+const Template = ({ children, title }: { children: React.ReactElement; title: string }) => {
   return (
     <Container>
       <Header>
@@ -44,4 +44,4 @@ const Templete = ({ children, title }: { children: React.ReactElement; title: st
   );
 };
 
-export default Templete;
+export default Template;
