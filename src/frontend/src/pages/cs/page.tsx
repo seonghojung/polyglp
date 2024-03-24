@@ -1,5 +1,21 @@
-import styled from 'styled-components';
-import Templete from '../components/Templete';
+import styled from "styled-components";
+import Templete from "../components/Templete";
+import Divider from "@mui/material/Divider";
+import { DataGrid, GridColDef, GridRowsProp } from "@mui/x-data-grid";
+import { useState } from "react";
+import TableHeader from "./components/TableHeader";
+
+const rows: GridRowsProp = [
+  { id: 1, col1: "Hello", col2: "World", col3: "asdasd@naver.com" },
+  { id: 2, col1: "DataGridPro", col2: "is Awesome", col3: "asdasd@naver.com" },
+  { id: 3, col1: "MUI", col2: "is Amazing", col3: "asdasd@naver.com" },
+];
+
+const columns: GridColDef[] = [
+  { field: "col1", headerName: "Column 1", width: 150 },
+  { field: "col2", headerName: "Column 2", width: 150 },
+  { field: "col3", headerName: "Column 3", width: 150 },
+];
 
 export const Container = styled.div`
   padding: 54px 59px 59px 60px;
@@ -11,13 +27,18 @@ export const Header = styled.div`
 
 const Wrap = styled.div`
   /* width: 89.108%; */
+
   margin-top: 102px;
-  height: calc(100vh - 273px);
+  /* height: calc(100vh - 273px); */
   background-color: #fff;
 `;
 
+const Inner = styled.div`
+  padding: 0 47px;
+`;
+
 const TopContent = styled.div`
-  height: 232px;
+  /* height: 232px; */
 `;
 
 const BodyContent = styled.div`
@@ -95,40 +116,51 @@ const Pagination = styled.div`
 export default function CsPage() {
   // 아트보드 : 2. CS 관리
   // WBS : CS 관리
-
+  const [paginationModel, setPaginationModel] = useState({ page: 0, pageSize: 10 });
   return (
     <Templete title="CS관리">
       <Wrap>
-        <TopContent>
-          <div>상단컨텐츠들</div>
-        </TopContent>
-        <BodyContent>
-          <Table>
-            <Thead>
-              <tr>
-                <BorderWrap>
-                  <TitleWrap>
-                    <Title1>신고종류</Title1>
-                    <Title2>이름</Title2>
-                    <Title3>이메일</Title3>
-                    <Title4>전화번호</Title4>
-                    <Title5>내용</Title5>
-                    <Title6>조치 내용</Title6>
-                    <Title7>경고누적</Title7>
-                    <Title8>등록일시</Title8>
-                    <Title9>처리하기</Title9>
-                  </TitleWrap>
-                </BorderWrap>
-              </tr>
-            </Thead>
-            <Tdata>
-              <Test>컴포넌트가 올예정</Test>
-              <Test>컴포넌트가 올예정</Test>
-              <Test>컴포넌트가 올예정</Test>
-            </Tdata>
-          </Table>
-        </BodyContent>
-        <Pagination>{'<< 1 / 2 / 3 >>'}</Pagination>
+        <Inner>
+          <TopContent>
+            <TableHeader setNoticeList={() => {}} />
+          </TopContent>
+          <BodyContent>
+            <div style={{ height: 300, width: "100%" }}>
+              <DataGrid
+                sx={{
+                  "& .MuiDataGrid-cell:focus-within, &.MuiDataGrid-cell:focus": {
+                    outline: "none",
+                  },
+                  "& .MuiDataGrid-columnHeader:focus-within, &.MuiDataGrid-columnHeader:focus": {
+                    outline: "none",
+                  },
+                  "&.MuiDataGrid-root": {
+                    border: "none",
+                  },
+                  "& .MuiDataGrid-sortIcon": {
+                    display: "none",
+                  },
+                  "& .MuiDataGrid-menuIconButton": {
+                    display: "none",
+                  },
+                  "& .MuiDataGrid-row.Mui-hovered": {
+                    backgroundColor: "transparent",
+                  },
+                  "& .MuiDataGrid-row:hover": {
+                    backgroundColor: "transparent",
+                  },
+                }}
+                autoHeight
+                rows={rows}
+                columns={columns}
+                disableRowSelectionOnClick
+                pageSizeOptions={[10, 25, 50]}
+                paginationModel={paginationModel}
+                onPaginationModelChange={setPaginationModel}
+              />
+            </div>
+          </BodyContent>
+        </Inner>
       </Wrap>
     </Templete>
   );
