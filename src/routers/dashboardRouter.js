@@ -61,13 +61,52 @@ dashboardRouter.get("/integratedIndex", async (req, res) => {
 });
 
 // 대시보드 - 트렌드 지표
-dashboardRouter.get("/trendIndex", async (req, res) => {});
+dashboardRouter.get("/trendIndex", async (req, res) => {
+  const getSubscribedUserGraph = async (startDuration, endDuration) => {
+    const { rows: data } = await client.query(`
+              SELECT TO_CHAR(DATE_TRUNC('month', sdate), 'YY년 MM월') AS month,
+              COUNT(*) AS count
+              FROM pays
+              WHERE sdate >= TIMESTAMP ${startDuration}
+              AND sdate < TIMESTAMP ${endDuration}
+              GROUP BY DATE_TRUNC('month', sdate)
+              ORDER BY month
+          `);
+    return data;
+  };
+});
 
 // 대시보드 - 언어 별 매칭 통계
 dashboardRouter.get("/languageMatchingIndex", async (req, res) => {});
 
 // 대시보드 - APP 통계
-dashboardRouter.get("/appIndex", async (req, res) => {});
+dashboardRouter.get("/appIndex", async (req, res) => {
+  const { rows: DAU } = await client.query(`
+    select login_date, count(*) as cnt from (
+    select  user_id, to_char(created_at, 'YYYY-mm-dd') as login_date 
+    from login_logs 
+    group by login_date, user_id
+    ) AS a group by login_date
+  `);
+  const { rows: MAU } = await client.query(`
+    select login_mon, count(*) as cnt from (
+    select  user_id, to_char(created_at, 'YYYY/mm') as login_mon 
+    from login_logs 
+    group by login_mon, user_id
+    ) AS a group by login_mon
+  `);
+  // 신고 건수 (미처리)
+  const { rows: openedReport } = await client.query(`
+  select * from evil_reports
+ `);
+
+  // 신고 건수 (처리됨)
+  const { rows: closedReport } = await client.query(`
+  select * from report_memos
+  `);
+  // @TODO: DAU , MAU의 정의가 이상하고 신고 처리/ 미처리건도 확인 필요함
+  return res.status(200).json({ DAU, MAU, openedReport, closedReport });
+});
 
 dashboardRouter.use((_, res) => {
   res.status(405).send("[/dashboard] - Method Not Allowed");
