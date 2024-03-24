@@ -6,27 +6,22 @@ import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import styled from "styled-components";
 
 const CountWrap = styled.div`
-  width: 287px;
-  height: 146px;
-  border-radius: 15px;
-  border: solid 1px #a0a0a0;
-  background-color: #fff;
-
+  display: flex;
   &:nth-child(2) {
     margin-top: 20px;
   }
 `;
 
 const CountTitle = styled.div`
-  margin-top: 38px;
+  width: 170px;
   font-size: 24px;
   font-weight: 500;
-  text-align: center;
+  text-align: left;
   color: #280559;
 `;
 
 const CountValue = styled.div`
-  margin-top: 18px;
+  margin-left: 20px;
   font-size: 28px;
   font-weight: bold;
   text-align: center;
@@ -61,7 +56,7 @@ const TableHeader = ({ setNoticeList }: { setNoticeList: Dispatch<SetStateAction
           <ReportCount state="pending" count={value} />
           <ReportCount state="complete" count={value} />
         </div>
-        <Box sx={{ display: "flex", gap: "20px", marginLeft: "20px" }}>
+        <Box sx={{ display: "flex", gap: "20px", marginLeft: "80px" }}>
           <SortBtn activeButton={activeButton} type="unprocessed" text="미처리 건만" handler={() => handleClick("unprocessed")} />
           <SortBtn activeButton={activeButton} type="completed" text="답변 완료만" handler={() => handleClick("completed")} />
           <SortBtn activeButton={activeButton} type="all" text="전체 보기" handler={() => handleClick("all")} />
