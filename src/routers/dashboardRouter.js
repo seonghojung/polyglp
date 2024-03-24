@@ -52,16 +52,19 @@ dashboardRouter.get("/integratedIndex", async (req, res) => {
     const startDuration = "'2024-03-19T06:14:39.591Z'";
     const endDuration = "'2024-03-24T06:14:39.591Z'";
     // 7. 구독 회원 수
-    const asd = await getSubscribedUserGraph(startDuration, endDuration);
+    const trendIndex = await getSubscribedUserGraph(startDuration, endDuration);
 
-    return res.status(200).json({ totalVideoCallTime, businessVideoCallTime, randomVideoCallTime, totalUsers, subscribedUsers, normalUsers, asd });
+    return res
+      .status(200)
+      .json({ totalVideoCallTime, businessVideoCallTime, randomVideoCallTime, totalUsers, subscribedUsers, normalUsers, trendIndex });
   } catch (error) {
     return res.sendStatus(500);
   }
 });
 
-// 대시보드 - 트렌드 지표
+// 대시보드 - 트렌드 지표 (구독자 수 변화 그래프 조회)
 dashboardRouter.get("/trendIndex", async (req, res) => {
+  // TODO - 트렌드 지표 영역에서 '설정하기' 버튼 누르면 호출되게 수정
   const getSubscribedUserGraph = async (startDuration, endDuration) => {
     const { rows: data } = await client.query(`
               SELECT TO_CHAR(DATE_TRUNC('month', sdate), 'YY년 MM월') AS month,
