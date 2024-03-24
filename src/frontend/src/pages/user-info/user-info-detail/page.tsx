@@ -1,6 +1,6 @@
 import { Await, LoaderFunction, defer, useLoaderData } from "react-router-dom";
 import { BASE_URL, language } from "../../../Types";
-import { Suspense, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import styled from "styled-components";
 import Template from "../../components/Template";
 import { Stack, Button, FormLabel, InputLabel, Box, Radio, RadioGroup, FormControlLabel, MenuItem, FormControl, TextField } from "@mui/material";
@@ -89,21 +89,36 @@ const languageItemFunc = ({ index, value, text }: ILanguageItemFunc) => {
 
 export default function UserInfoDetailPage() {
   // 아트보드 : 1.1 회원 정보 상세
-  // WBS : 회원정보상세
   const { data } = useLoaderData() as IData;
+
+  return (
+    <Suspense fallback={<p>로딩중입니다...</p>}>
+      <Await resolve={data}>
+        {(user: IUser) => {
+          return (
+            <Template title="회원 정보 상세">
+              <Wrap>
+                <FormWrap user={user} />
+              </Wrap>
+            </Template>
+          );
+        }}
+      </Await>
+    </Suspense>
+  );
+}
+
+// -------- component
+const FormWrap = ({ user }: any) => {
   const [gender, setGender] = useState("female");
   const [language, setLanguage] = useState("");
   const [subscription, setSubscription] = useState("");
-  const [displayName, setDisplayName] = useState(""); // 닉네임
+  const [displayName, setDisplayName] = useState(user.displayName); // 닉네임
   const [isDuplicate, setIsDuplicate] = useState(false); // 중복 체크 결과
 
-  const displayNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setDisplayName(event.target.value);
-  };
+  
 
   const checkDisplayNameDuplicateFunc = async () => {
-    const requestBody = { displayName };
-
     // API 컨트롤러의 특정 함수를 호출합니다.
     const response = await fetch(`${BASE_URL}/api/check-displayName-duplicate`, {
       method: "POST",
@@ -111,13 +126,17 @@ export default function UserInfoDetailPage() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(requestBody),
+      body: JSON.stringify({ displayName }),
     });
     if (response.ok) {
       const responseData = await response.json();
-      console.log(responseData);
+      setIsDuplicate(responseData.isDuplicate);
     }
   };
+
+  useEffect(() => {
+    console.log(isDuplicate, "effect");
+  }, [isDuplicate]);
 
   const genderRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setGender((event.target as HTMLInputElement).value);
@@ -149,79 +168,69 @@ export default function UserInfoDetailPage() {
   ];
 
   return (
-    <Suspense fallback={<p>로딩중입니다...</p>}>
-      <Await resolve={data}>
-        {(user: IUser) => {
-          return (
-            <Template title="회원 정보 상세">
-              <Wrap>
-                <Form>
-                  {/* 아이디 / 이메일 */}
-                  <FormControlWrap>
-                    <TextFieldWrap label="아이디" variant="filled" value={user.id} color="secondary" inputProps={{ style: { fontSize: "20px" } }} disabled />
-                    <TextFieldWrap label="이메일" variant="filled" value={user.email} color="secondary" inputProps={{ style: { fontSize: "20px" } }} disabled />
-                  </FormControlWrap>
-                  {/* 닉네임 */}
-                  <FormControlWrap>
-                    <TextFieldWrap label="닉네임" variant="outlined" defaultValue={user.displayName} color="secondary" inputProps={{ style: { fontSize: "20px" } }} onChange={displayNameChange} />
-                    <Button color="inherit" variant="contained" onClick={checkDisplayNameDuplicateFunc}>
-                      중복확인
-                    </Button>
-                    <TextFieldWrap type="checkbox" name="isDuplicated" />
-                  </FormControlWrap>
-                  {/* 비밀번호 */}
-                  <FormControlWrap>
-                    <TextFieldWrap type="password" label="비밀번호" variant="outlined" color="secondary" inputProps={{ style: { fontSize: "20px" } }} />
-                    <TextFieldWrap type="password" label="비밀번호 확인" variant="outlined" color="secondary" inputProps={{ style: { fontSize: "20px" } }} />
-                  </FormControlWrap>
-                  {/* 성별 */}
-                  <FormControlWrap>
-                    <RadioGroupWrap aria-labelledby="demo-controlled-radio-buttons-group" name="controlled-radio-buttons-group" value={gender} onChange={genderRadioChange}>
-                      <FormControlLabel value="female" control={<Radio color="secondary" />} label="여자" />
-                      <FormControlLabel value="male" control={<Radio color="secondary" />} label="남자" />
-                    </RadioGroupWrap>
-                  </FormControlWrap>
-                  {/* 언어 / 구독*/}
-                  <FormControlWrap>
-                    <Box sx={{ minWidth: 120 }}>
-                      <FormControlWrap fullWidth>
-                        <InputLabel id="demo-simple-select-label">언어</InputLabel>
-                        <Select defaultValue={user.language} label="언어" onChange={languageChange}>
-                          {languageItems.map(languageItemFunc)}
-                        </Select>
-                      </FormControlWrap>
-                    </Box>
-                    <Box sx={{ minWidth: 120 }}>
-                      <FormControlWrap fullWidth>
-                        <InputLabel id="demo-simple-select-label">구독</InputLabel>
-                        <Select defaultValue={user.issubscription ? "구독 중" : "구독취소"} label="구독" onChange={subscriptionChange}>
-                          <MenuItem value={"구독 중"}>구독 중</MenuItem>
-                          <MenuItem value={"구독취소"}>구독취소</MenuItem>
-                        </Select>
-                      </FormControlWrap>
-                    </Box>
-                  </FormControlWrap>
-                  <FormControlWrap>
-                    <Stack spacing={2} direction="row">
-                      <Button type="button" color="success" variant="contained">
-                        수정 완료
-                      </Button>
-                      {/* TODO: 차단처리시 어떤 값을 변경해야하는지 */}
-                      <Button color="error" variant="contained">
-                        차단 처리
-                      </Button>
-                      {/* TODO: 링크 처리를 해야할것으로 판단 */}
-                      <Button color="inherit" variant="contained">
-                        뒤로가기
-                      </Button>
-                    </Stack>
-                  </FormControlWrap>
-                </Form>
-              </Wrap>
-            </Template>
-          );
-        }}
-      </Await>
-    </Suspense>
+    <>
+      <Form>
+        {/* 아이디 / 이메일 */}
+        <FormControlWrap>
+          <TextFieldWrap label="아이디" variant="filled" value={user.id} color="secondary" inputProps={{ style: { fontSize: "20px" } }} disabled />
+          <TextFieldWrap label="이메일" variant="filled" value={user.email} color="secondary" inputProps={{ style: { fontSize: "20px" } }} disabled />
+        </FormControlWrap>
+        {/* 닉네임 */}
+        <FormControlWrap>
+          <TextFieldWrap label="닉네임" variant="outlined" defaultValue={user.displayName} color="secondary" inputProps={{ style: { fontSize: "20px" } }} onChange={(e)=>setDisplayName(e.target.value)}/>
+          <Button color={isDuplicate ? "error" : "success"} variant="contained" onClick={checkDisplayNameDuplicateFunc}>
+            중복확인
+          </Button>
+          <TextFieldWrap type="checkbox" name="isDuplicated" />
+        </FormControlWrap>
+        {/* 비밀번호 */}
+        <FormControlWrap>
+          <TextFieldWrap type="password" label="비밀번호" variant="outlined" color="secondary" inputProps={{ style: { fontSize: "20px" } }} />
+          <TextFieldWrap type="password" label="비밀번호 확인" variant="outlined" color="secondary" inputProps={{ style: { fontSize: "20px" } }} />
+        </FormControlWrap>
+        {/* 성별 */}
+        <FormControlWrap>
+          <RadioGroupWrap aria-labelledby="demo-controlled-radio-buttons-group" name="controlled-radio-buttons-group" value={gender} onChange={genderRadioChange}>
+            <FormControlLabel value="female" control={<Radio color="secondary" />} label="여자" />
+            <FormControlLabel value="male" control={<Radio color="secondary" />} label="남자" />
+          </RadioGroupWrap>
+        </FormControlWrap>
+        {/* 언어 / 구독*/}
+        <FormControlWrap>
+          <Box sx={{ minWidth: 120 }}>
+            <FormControlWrap fullWidth>
+              <InputLabel id="demo-simple-select-label">언어</InputLabel>
+              <Select defaultValue={user.language} label="언어" onChange={languageChange}>
+                {languageItems.map(languageItemFunc)}
+              </Select>
+            </FormControlWrap>
+          </Box>
+          <Box sx={{ minWidth: 120 }}>
+            <FormControlWrap fullWidth>
+              <InputLabel id="demo-simple-select-label">구독</InputLabel>
+              <Select defaultValue={user.issubscription ? "구독 중" : "구독취소"} label="구독" onChange={subscriptionChange}>
+                <MenuItem value={"구독 중"}>구독 중</MenuItem>
+                <MenuItem value={"구독취소"}>구독취소</MenuItem>
+              </Select>
+            </FormControlWrap>
+          </Box>
+        </FormControlWrap>
+        <FormControlWrap>
+          <Stack spacing={2} direction="row">
+            <Button type="button" color="success" variant="contained">
+              수정 완료
+            </Button>
+            {/* TODO: 차단처리시 어떤 값을 변경해야하는지 */}
+            <Button color="error" variant="contained">
+              차단 처리
+            </Button>
+            {/* TODO: 링크 처리를 해야할것으로 판단 */}
+            <Button color="inherit" variant="contained">
+              뒤로가기
+            </Button>
+          </Stack>
+        </FormControlWrap>
+      </Form>
+    </>
   );
-}
+};
