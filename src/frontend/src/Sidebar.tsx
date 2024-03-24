@@ -17,6 +17,10 @@ const SidebarWrap = styled.div`
   border-bottom-right-radius: 25px;
   background-color: #280559;
   transition: width 0.3s ease-in-out;
+  overflow: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
   &.animation {
     width: 58px;
     transition: width 0.3s ease-in-out;

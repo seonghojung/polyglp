@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
 const Container = styled.div`
-  padding: 54px 59px 59px 60px;
+  padding: 54px 59px 59px 410px;
   max-width: 1448px;
   margin: 0 auto;
-  /* margin: 54px auto 59px; */
+  min-height: calc(100vh - 116px);
 `;
 
 const Header = styled.div`
