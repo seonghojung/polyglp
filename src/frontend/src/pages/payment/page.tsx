@@ -32,7 +32,9 @@ export default function PaymentsPage() {
   return (
     <Template title="결제 통계">
       <>
-        <TopContent></TopContent>
+        <TopContent>
+          <div style={{ height: "118px", textAlign: "center", paddingTop: "100px" }}>상단 컨텐츠 영역</div>
+        </TopContent>
         <BodyContent>
           <div style={{ height: 300, width: "100%" }}>
             <DataGrid
