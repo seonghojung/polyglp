@@ -4,19 +4,43 @@ import Divider from "@mui/material/Divider";
 import { DataGrid, GridColDef, GridRowsProp } from "@mui/x-data-grid";
 import { useState } from "react";
 import TableHeader from "../cs/components/TableHeader";
-
 const rows: GridRowsProp = [
-  { id: 1, col1: "Hello", col2: "World", col3: "asdasd@naver.com" },
-  { id: 2, col1: "DataGridPro", col2: "is Awesome", col3: "asdasd@naver.com" },
-  { id: 3, col1: "MUI", col2: "is Amazing", col3: "asdasd@naver.com" },
+  { id: 1, 아이디: "아이디", 이메일: "이메일", 이름: "이름", 전화번호: "전화번호", 권한내역: "권한내역" },
+  { id: 2, 아이디: "아이디", 이메일: "이메일", 이름: "이름", 전화번호: "전화번호", 권한내역: "권한내역" },
+  { id: 3, 아이디: "아이디", 이메일: "이메일", 이름: "이름", 전화번호: "전화번호", 권한내역: "권한내역" },
+  { id: 4, 아이디: "아이디", 이메일: "이메일", 이름: "이름", 전화번호: "전화번호", 권한내역: "권한내역" },
+  { id: 5, 아이디: "아이디", 이메일: "이메일", 이름: "이름", 전화번호: "전화번호", 권한내역: "권한내역" },
+  { id: 6, 아이디: "아이디", 이메일: "이메일", 이름: "이름", 전화번호: "전화번호", 권한내역: "권한내역" },
+  { id: 7, 아이디: "아이디", 이메일: "이메일", 이름: "이름", 전화번호: "전화번호", 권한내역: "권한내역" },
+  { id: 8, 아이디: "아이디", 이메일: "이메일", 이름: "이름", 전화번호: "전화번호", 권한내역: "권한내역" },
+  { id: 9, 아이디: "아이디", 이메일: "이메일", 이름: "이름", 전화번호: "전화번호", 권한내역: "권한내역" },
+  { id: 10, 아이디: "아이디", 이메일: "이메일", 이름: "이름", 전화번호: "전화번호", 권한내역: "권한내역" },
+  { id: 11, 아이디: "아이디", 이메일: "이메일", 이름: "이름", 전화번호: "전화번호", 권한내역: "권한내역" },
+  { id: 12, 아이디: "아이디", 이메일: "이메일", 이름: "이름", 전화번호: "전화번호", 권한내역: "권한내역" },
+  { id: 13, 아이디: "아이디", 이메일: "이메일", 이름: "이름", 전화번호: "전화번호", 권한내역: "권한내역" },
 ];
 
 const columns: GridColDef[] = [
-  { field: "col1", headerName: "Column 1", width: 150 },
-  { field: "col2", headerName: "Column 2", width: 150 },
-  { field: "col3", headerName: "Column 3", width: 150 },
+  { field: "아이디", headerName: "아이디", width: 200 },
+  { field: "이메일", headerName: "이메일", width: 250 },
+  { field: "이름", headerName: "이름", width: 200 },
+  { field: "전화번호", headerName: "전화번호", width: 250 },
+  { field: "권한내역", headerName: "권한내역", width: 300 },
+  {
+    field: "자세히보기",
+    headerName: "자세히보기",
+    width: 150,
+    renderCell: (rows) => (
+      <button
+        onClick={() => {
+          alert(`${rows.id}번쨰 자세히보기 버튼`);
+        }}
+      >
+        확인하기
+      </button>
+    ),
+  },
 ];
-
 const TopContent = styled.div`
   /* height: 232px; */
 `;
@@ -38,7 +62,7 @@ export default function AdminPage() {
           <div style={{ height: "118px", textAlign: "center", paddingTop: "100px" }}>상단 컨텐츠 영역</div>
         </TopContent>
         <BodyContent>
-          <div style={{ height: 300, width: "100%" }}>
+          <div style={{ width: "100%" }}>
             <DataGrid
               sx={{
                 "& .MuiDataGrid-cell:focus-within, &.MuiDataGrid-cell:focus": {
