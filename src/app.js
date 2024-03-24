@@ -12,6 +12,7 @@ import apiRouter from "./routers/apiRouter";
 
 import "./passport";
 import userRouter from "./routers/userRouter";
+import dashboardRouter from "./routers/dashboardRouter";
 
 const app = express();
 
@@ -55,6 +56,7 @@ app.get("/ping", (req, res) => {
 
 app.use("/api", apiRouter);
 app.use("/user", userRouter);
+app.use("/dashboard", dashboardRouter);
 
 if (isDevMode) {
   app.use((_, res) => {
