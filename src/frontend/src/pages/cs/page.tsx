@@ -5,14 +5,6 @@ import { useState } from "react";
 import TableHeader from "./components/TableHeader";
 import { Button } from "@mui/material";
 
-const Btn = styled(Button)`
-  background-color: red;
-
-  &.hover {
-    background-color: blue;
-  }
-`;
-
 const rows: GridRowsProp = [
   {
     id: 1,
