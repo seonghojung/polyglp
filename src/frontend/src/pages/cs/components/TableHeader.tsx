@@ -13,7 +13,7 @@ const CountWrap = styled.div`
   background-color: #fff;
 
   &:nth-child(2) {
-    margin-left: 26px;
+    margin-top: 20px;
   }
 `;
 
@@ -56,53 +56,17 @@ const TableHeader = ({ setNoticeList }: { setNoticeList: Dispatch<SetStateAction
       }}
     >
       {/* TODO: Submit */}
-      <Box sx={{ rowGap: 2, display: "flex", flexWrap: "wrap", alignItems: "flex-start", justifyContent: "inital" }}>
-        <ReportCount state="pending" count={value} />
-        <ReportCount state="complete" count={value} />
+      <Box sx={{ display: "flex" }}>
+        <div>
+          <ReportCount state="pending" count={value} />
+          <ReportCount state="complete" count={value} />
+        </div>
+        <Box sx={{ display: "flex", gap: "20px", marginLeft: "20px" }}>
+          <SortBtn activeButton={activeButton} type="unprocessed" text="미처리 건만" handler={() => handleClick("unprocessed")} />
+          <SortBtn activeButton={activeButton} type="completed" text="답변 완료만" handler={() => handleClick("completed")} />
+          <SortBtn activeButton={activeButton} type="all" text="전체 보기" handler={() => handleClick("all")} />
+        </Box>
       </Box>
-      <SortBtn activeButton={activeButton} type="unprocessed" text="미처리 건만" handler={() => handleClick("unprocessed")} />
-      <SortBtn activeButton={activeButton} type="completed" text="답변 완료만" handler={() => handleClick("completed")} />
-      <SortBtn activeButton={activeButton} type="all" text="전체 보기" handler={() => handleClick("all")} />
-
-      {/* <Button
-        sx={{
-          height: "48px",
-          backgroundColor: isActive ? "#00b9fd" : "#9a9a9a",
-          ":hover": { backgroundColor: isActive ? "#00a0db" : "#727272" },
-        }}
-        type="button"
-        variant="contained"
-        size="large"
-        onClick={handleClick}
-      >
-        미처리 건만
-      </Button>
-      <Button
-        sx={{
-          height: "48px",
-          backgroundColor: isActive ? "#00b9fd" : "#9a9a9a",
-          ":hover": { backgroundColor: isActive ? "#00a0db" : "#727272" },
-        }}
-        type="button"
-        variant="contained"
-        size="large"
-        onClick={() => {}}
-      >
-        답변 완료만
-      </Button>
-      <Button
-        sx={{
-          height: "48px",
-          backgroundColor: isActive ? "#00b9fd" : "#9a9a9a",
-          ":hover": { backgroundColor: isActive ? "#00a0db" : "#727272" },
-        }}
-        type="button"
-        variant="contained"
-        size="large"
-        onClick={() => {}}
-      >
-        전체 보기
-      </Button> */}
     </Box>
   );
 };
