@@ -53,32 +53,19 @@ const Text = styled(TextField)`
 const Test1 = styled(FormLabel)``;
 const Test2 = styled(FormControlLabel)``;
 
-<<<<<<< HEAD
-interface ILanguageItemFunc {
-  l: string;
-=======
 interface IMenuItemFunc {
   index: number;
   value: string;
->>>>>>> c56ca74ac566ee43cb8cd93070c80af64f2e36f9
   text: string;
 }
 
 // Iterator Component
-<<<<<<< HEAD
-const LanguageItemFunc = ({ l, text }: ILanguageItemFunc) => {
-  console.log(l, text);
-  console.log(<MenuItem value={l}>{text}</MenuItem>);
-
-  return <MenuItem value={l}>{text}</MenuItem>;
-=======
 const MenuItemFunc = ({ index, value, text }: IMenuItemFunc) => {
   return (
     <MenuItem key={index} value={value}>
       {text}
     </MenuItem>
   );
->>>>>>> c56ca74ac566ee43cb8cd93070c80af64f2e36f9
 };
 
 export default function UserInfoDetailPage() {
@@ -96,27 +83,6 @@ export default function UserInfoDetailPage() {
     setLanguage(event.target.value);
   };
 
-<<<<<<< HEAD
-  // 언어 리스트
-  const languageItems: ILanguageItemFunc[] = [
-    { value: "ko", text: "한국어" },
-    { value: "en", text: "영어" },
-    { value: "sp", text: "스페인어" },
-    { value: "gr", text: "그리스어" },
-    { value: "po", text: "폴란드어" },
-    { value: "tk", text: "터키어" },
-    { value: "zh-cn", text: "중국어" },
-    { value: "fr", text: "프랑스어" },
-    { value: "it", text: "이탈리아어" },
-    { value: "ru", text: "러시아어" },
-    { value: "ar", text: "아랍어" },
-    { value: "zhs", text: "중국어간체" },
-    { value: "zht", text: "중국어번체" },
-=======
-  const handleChange = (event: SelectChangeEvent) => {
-    setAge(event.target.value as string);
-  };
-
   // 사이드바 메뉴
   const menuItems: IMenuItemFunc[] = [
     { index: 1, value: "ko", text: "한국어" },
@@ -132,7 +98,6 @@ export default function UserInfoDetailPage() {
     { index: 11, value: "ar", text: "아랍어" },
     { index: 12, value: "zhs", text: "중국어간체" },
     { index: 13, value: "zht", text: "중국어번체" },
->>>>>>> c56ca74ac566ee43cb8cd93070c80af64f2e36f9
   ];
 
   return (
@@ -175,17 +140,9 @@ export default function UserInfoDetailPage() {
                     {/* <FormControl> */}
                     <Box sx={{ minWidth: 120 }}>
                       <FormControl fullWidth>
-<<<<<<< HEAD
-                        <InputLabel id="demo-simple-select-label">Age</InputLabel>
-                        <Select labelId="demo-simple-select-label" id="demo-simple-select" value={age} label="Age" onChange={handleChange}>
-                          <MenuItem value={10}>Ten</MenuItem>
-                          <MenuItem value={20}>Twenty</MenuItem>
-                          <MenuItem value={30}>Thirty</MenuItem>
-=======
                         <InputLabel id="demo-simple-select-label">언어</InputLabel>
                         <Select value={language} label="언어" onChange={languageChange}>
                           {menuItems.map(MenuItemFunc)}
->>>>>>> c56ca74ac566ee43cb8cd93070c80af64f2e36f9
                         </Select>
                       </FormControl>
                     </Box>
