@@ -2,7 +2,7 @@ import { Outlet, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { BASE_URL } from "./App";
+import { BASE_URL } from "./Types";
 
 // BEGIN: Style Component
 const SidebarWrap = styled.div`

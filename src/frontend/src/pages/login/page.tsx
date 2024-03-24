@@ -1,4 +1,4 @@
-import { BASE_URL } from "../../App";
+import { BASE_URL } from "../../Types";
 
 export default function LoginPage() {
   return (

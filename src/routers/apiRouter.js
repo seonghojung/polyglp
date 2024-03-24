@@ -63,9 +63,10 @@ apiRouter.get("/adminUsers", async (req, res) => {
 });
 
 apiRouter.post("/login", async (req, res, next) => {
+  const alertMessage = "로그인 정보가 잘못되었습니다.";
   passport.authenticate("local", (err, user) => {
     if (err) return next(err);
-    if (!user) return res.send(`로그인 정보가 잘못되었습니다.`);
+    if (!user) return res.status(307).send(`<script>alert("${alertMessage}"); window.location.href="${BASE_URL}/";</script>`);
     return req.logIn(user, (e) => {
       if (err) return next(e);
       return res.status(200).redirect(`${BASE_URL}/dashboard`);
@@ -74,7 +75,7 @@ apiRouter.post("/login", async (req, res, next) => {
 });
 
 apiRouter.use((_, res) => {
-  res.status(405).send("Method Not Allowed");
+  res.status(405).send("[/api] - Method Not Allowed");
 });
 
 export default apiRouter;

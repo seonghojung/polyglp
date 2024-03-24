@@ -11,13 +11,20 @@ import morgan from "morgan";
 import apiRouter from "./routers/apiRouter";
 
 import "./passport";
+import userRouter from "./routers/userRouter";
 
 const app = express();
 
 const isDevMode = process.env.mode === "dev";
 
 if (isDevMode) {
-  app.use(cors());
+  app.use(
+    cors({
+      credentials: true,
+      origin: "https://localhost:3000",
+      optionsSuccessStatus: 200,
+    })
+  );
   app.set("trust proxy", 1);
 }
 app.use(cookieParser());
@@ -47,6 +54,7 @@ app.get("/ping", (req, res) => {
 });
 
 app.use("/api", apiRouter);
+app.use("/user", userRouter);
 
 if (isDevMode) {
   app.use((_, res) => {
