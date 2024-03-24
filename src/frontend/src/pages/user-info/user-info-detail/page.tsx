@@ -51,6 +51,7 @@ export default function UserInfoDetailPage() {
             <div>
               <h1>{user.id}</h1>
               <h2>{user.email}</h2>
+              <h2>{user.snsId}</h2>
             </div>
           );
         }}
