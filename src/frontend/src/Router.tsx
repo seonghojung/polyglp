@@ -4,7 +4,7 @@ import MainPage from "./pages/home/page";
 import LoginPage from "./pages/login/page";
 import DashBoardPage from "./pages/dashboard/page";
 import UserInfoPage from "./pages/user-info/page";
-import UserInfoDetailPage, { loadBoardData } from "./pages/user-info/user-info-detail/page";
+import UserInfoDetailPage, { loadUserData } from "./pages/user-info/user-info-detail/page";
 import CsPage from "./pages/cs/page";
 import CsDetailPage from "./pages/cs/cs-detail/page";
 import AdminPage from "./pages/admin/page";
@@ -60,7 +60,7 @@ export const router = createBrowserRouter([
           {
             path: ":userID",
             element: <UserInfoDetailPage />,
-            loader: loadBoardData,
+            loader: loadUserData,
             errorElement: (
               <div>
                 <h1>저런! 유저 정보가 없는 것 같습니다.</h1>

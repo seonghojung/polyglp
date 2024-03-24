@@ -28,7 +28,7 @@ export interface IUser {
   updated_at: string | null;
   deleted_at: string | null;
 }
-export const loadBoardData: LoaderFunction = async ({ request, params }) => {
+export const loadUserData: LoaderFunction = async ({ request, params }) => {
   const id = params.userID;
   if (typeof id === "undefined") throw new Error();
 
