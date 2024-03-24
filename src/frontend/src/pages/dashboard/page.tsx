@@ -11,6 +11,10 @@ export default function DashBoardPage() {
   // 아트보드 : 0. 대시보드
   // WBS : 대시보드
   const lineOptions: EChartsOption = {
+    title: {
+      text: "구독자 수 변화 그래프(월별)",
+      left: "center",
+    },
     xAxis: {
       type: "category",
       data: ["1월", "2월", "3월", "4월", "5월", "6월", "7월"],

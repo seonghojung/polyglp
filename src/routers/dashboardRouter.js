@@ -24,19 +24,37 @@ dashboardRouter.get("/integratedIndex", async (req, res) => {
     // 4. 총 회원 수
     const {
       rows: [{ count: totalUsers }],
-    } = await client.query("SELECT count(*) FROM users");
+    } = await client.query("SELECT count(*) FROM users WHERE isdel = false");
 
     // 5. 무료 회원 수
     const {
       rows: [{ count: subscribedUsers }],
-    } = await client.query("SELECT count(*) FROM users where issubscription=true");
+    } = await client.query("SELECT count(*) FROM users where isdel = false AND issubscription=true");
 
     // 6. 구독 회원 수
     const {
       rows: [{ count: normalUsers }],
-    } = await client.query("SELECT count(*) FROM users where issubscription=false");
+    } = await client.query("SELECT count(*) FROM users where isdel = false AND issubscription=false");
 
-    return res.status(200).json({ totalVideoCallTime, businessVideoCallTime, randomVideoCallTime, totalUsers, subscribedUsers, normalUsers });
+    const getSubscribedUserGraph = async (startDuration, endDuration) => {
+      const { rows: data } = await client.query(`
+            SELECT TO_CHAR(DATE_TRUNC('month', sdate), 'YY년 MM월') AS month,
+            COUNT(*) AS count
+            FROM pays
+            WHERE sdate >= TIMESTAMP ${startDuration}
+            AND sdate < TIMESTAMP ${endDuration}
+            GROUP BY DATE_TRUNC('month', sdate)
+            ORDER BY month
+        `);
+      return data;
+    };
+
+    const startDuration = "'2024-03-19T06:14:39.591Z'";
+    const endDuration = "'2024-03-24T06:14:39.591Z'";
+    // 7. 구독 회원 수
+    const asd = await getSubscribedUserGraph(startDuration, endDuration);
+
+    return res.status(200).json({ totalVideoCallTime, businessVideoCallTime, randomVideoCallTime, totalUsers, subscribedUsers, normalUsers, asd });
   } catch (error) {
     return res.sendStatus(500);
   }
