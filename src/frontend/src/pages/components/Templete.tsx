@@ -24,6 +24,7 @@ const Wrap = styled.div`
   margin-top: 102px;
   /* height: calc(100vh - 273px); */
   background-color: #fff;
+  border-radius: 10px;
 `;
 
 const Inner = styled.div`
