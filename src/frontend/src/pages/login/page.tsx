@@ -1,6 +1,8 @@
+import { BASE_URL } from "../../App";
+
 export default function LoginPage() {
   return (
-    <form action="https://localhost:8080/api/login" method="post">
+    <form action={`${BASE_URL}/api/login`} method="post">
       <div>
         <label htmlFor="userID">사용자 ID:</label>
         <input type="text" id="userID" name="userID" />
