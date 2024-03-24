@@ -53,16 +53,17 @@ const Text = styled(TextField)`
 const Test1 = styled(FormLabel)``;
 const Test2 = styled(FormControlLabel)``;
 
-interface IMenuItemFunc {
-  value: string;
+interface ILanguageItemFunc {
+  l: string;
   text: string;
 }
 
 // Iterator Component
-const MenuItemFunc = ({ value, text }: IMenuItemFunc) => {
-  console.log(value, text);
+const LanguageItemFunc = ({ l, text }: ILanguageItemFunc) => {
+  console.log(l, text);
+  console.log(<MenuItem value={l}>{text}</MenuItem>);
 
-  return <MenuItem value={value}>{text}</MenuItem>;
+  return <MenuItem value={l}>{text}</MenuItem>;
 };
 
 export default function UserInfoDetailPage() {
@@ -75,17 +76,13 @@ export default function UserInfoDetailPage() {
   const genderRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setGender((event.target as HTMLInputElement).value);
   };
+
   const languageChange = (event: SelectChangeEvent) => {
     setLanguage(event.target.value);
   };
-  const [age, setAge] = useState("");
 
-  const handleChange = (event: SelectChangeEvent) => {
-    setAge(event.target.value as string);
-  };
-
-  // 사이드바 메뉴
-  const menuItems: IMenuItemFunc[] = [
+  // 언어 리스트
+  const languageItems: ILanguageItemFunc[] = [
     { value: "ko", text: "한국어" },
     { value: "en", text: "영어" },
     { value: "sp", text: "스페인어" },
@@ -141,13 +138,11 @@ export default function UserInfoDetailPage() {
                     {/* <FormControl> */}
                     <Box sx={{ minWidth: 120 }}>
                       <FormControl fullWidth>
-                        <InputLabel id="demo-simple-select-label">언어</InputLabel>
-                        <Select labelId="demo-simple-select-label" id="demo-simple-select" value={language} label="언어" onChange={languageChange}>
-                          {menuItems.map((item, index) => {
-                            console.log(item.value);
-                            return <MenuItemFunc key={index} value={item.value} text={item.text} />;
-                          })}
-                          <MenuItem value="ko">ko</MenuItem>
+                        <InputLabel id="demo-simple-select-label">Age</InputLabel>
+                        <Select labelId="demo-simple-select-label" id="demo-simple-select" value={age} label="Age" onChange={handleChange}>
+                          <MenuItem value={10}>Ten</MenuItem>
+                          <MenuItem value={20}>Twenty</MenuItem>
+                          <MenuItem value={30}>Thirty</MenuItem>
                         </Select>
                       </FormControl>
                     </Box>
@@ -157,16 +152,6 @@ export default function UserInfoDetailPage() {
                       <Label>구독</Label>
                       <Input value="thor@naver.com" readOnly></Input>
                     </FormControl>
-                    <Box sx={{ minWidth: 120 }}>
-                      <FormControl fullWidth>
-                        <InputLabel id="demo-simple-select-label">Age</InputLabel>
-                        <Select labelId="demo-simple-select-label" id="demo-simple-select" value={age} label="Age" onChange={handleChange}>
-                          <MenuItem value={10}>Ten</MenuItem>
-                          <MenuItem value={20}>Twenty</MenuItem>
-                          <MenuItem value={30}>Thirty</MenuItem>
-                        </Select>
-                      </FormControl>
-                    </Box>
                   </Form>
                 </Wrap>
               </Template>
