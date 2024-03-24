@@ -33,9 +33,16 @@ const CountValue = styled.div`
   color: #0f0f0f;
 `;
 
+type ActiveButton = "unprocessed" | "completed" | "all" | null;
+
 const TableHeader = ({ setNoticeList }: { setNoticeList: Dispatch<SetStateAction<any[]>> }) => {
-  const [category, setCategory] = useState<string | null>(null);
-  const [searchValue, setSearchValue] = useState<string>("");
+  const [activeButton, setActiveButton] = useState<ActiveButton>("unprocessed");
+
+  const handleClick = (type: ActiveButton) => {
+    setActiveButton(type);
+  };
+
+  const value = (1000).toLocaleString();
 
   return (
     <Box
@@ -50,18 +57,52 @@ const TableHeader = ({ setNoticeList }: { setNoticeList: Dispatch<SetStateAction
     >
       {/* TODO: Submit */}
       <Box sx={{ rowGap: 2, display: "flex", flexWrap: "wrap", alignItems: "flex-start", justifyContent: "inital" }}>
-        <ReportCount state="pending" count={1000} />
-        <ReportCount state="complete" count={1000} />
+        <ReportCount state="pending" count={value} />
+        <ReportCount state="complete" count={value} />
       </Box>
-      <Button sx={{ height: "48px", backgroundColor: "red", "& . MuiButton-root:hover": { backgroundColor: "white" } }} type="button" variant="contained" size="large" onClick={() => {}}>
+      <SortBtn activeButton={activeButton} type="unprocessed" text="미처리 건만" handler={() => handleClick("unprocessed")} />
+      <SortBtn activeButton={activeButton} type="completed" text="답변 완료만" handler={() => handleClick("completed")} />
+      <SortBtn activeButton={activeButton} type="all" text="전체 보기" handler={() => handleClick("all")} />
+
+      {/* <Button
+        sx={{
+          height: "48px",
+          backgroundColor: isActive ? "#00b9fd" : "#9a9a9a",
+          ":hover": { backgroundColor: isActive ? "#00a0db" : "#727272" },
+        }}
+        type="button"
+        variant="contained"
+        size="large"
+        onClick={handleClick}
+      >
         미처리 건만
       </Button>
-      <Button sx={{ height: "48px" }} type="button" variant="contained" size="large" onClick={() => {}}>
+      <Button
+        sx={{
+          height: "48px",
+          backgroundColor: isActive ? "#00b9fd" : "#9a9a9a",
+          ":hover": { backgroundColor: isActive ? "#00a0db" : "#727272" },
+        }}
+        type="button"
+        variant="contained"
+        size="large"
+        onClick={() => {}}
+      >
         답변 완료만
       </Button>
-      <Button sx={{ height: "48px" }} type="button" variant="contained" size="large" onClick={() => {}}>
+      <Button
+        sx={{
+          height: "48px",
+          backgroundColor: isActive ? "#00b9fd" : "#9a9a9a",
+          ":hover": { backgroundColor: isActive ? "#00a0db" : "#727272" },
+        }}
+        type="button"
+        variant="contained"
+        size="large"
+        onClick={() => {}}
+      >
         전체 보기
-      </Button>
+      </Button> */}
     </Box>
   );
 };
@@ -72,7 +113,7 @@ export default TableHeader;
 
 interface ReportCount {
   state: "pending" | "complete";
-  count: number;
+  count: string;
 }
 
 const ReportCount = ({ state, count }: ReportCount) => {
@@ -82,5 +123,30 @@ const ReportCount = ({ state, count }: ReportCount) => {
       <CountTitle>신고 건수({text})</CountTitle>
       <CountValue>{count}</CountValue>
     </CountWrap>
+  );
+};
+
+interface ISortBtn {
+  handler: () => void;
+  activeButton: ActiveButton;
+  type: ActiveButton; // 'unprocessed', 'completed', 'all' 중 하나
+  text: string; // 버튼에 표시될 텍스트
+}
+
+const SortBtn = ({ handler, activeButton, type, text }: ISortBtn) => {
+  return (
+    <Button
+      sx={{
+        height: "48px",
+        backgroundColor: activeButton === type ? "#00b9fd" : "#9a9a9a",
+        ":hover": { backgroundColor: activeButton === type ? "#00a0db" : "#727272" },
+      }}
+      type="button"
+      variant="contained"
+      size="large"
+      onClick={handler}
+    >
+      {text}
+    </Button>
   );
 };

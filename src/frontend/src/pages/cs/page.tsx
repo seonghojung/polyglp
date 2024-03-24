@@ -1,20 +1,48 @@
 import styled from "styled-components";
 import Template from "../components/Template";
-import Divider from "@mui/material/Divider";
 import { DataGrid, GridColDef, GridRowsProp } from "@mui/x-data-grid";
 import { useState } from "react";
 import TableHeader from "./components/TableHeader";
 
 const rows: GridRowsProp = [
-  { id: 1, col1: "Hello", col2: "World", col3: "asdasd@naver.com" },
-  { id: 2, col1: "DataGridPro", col2: "is Awesome", col3: "asdasd@naver.com" },
-  { id: 3, col1: "MUI", col2: "is Amazing", col3: "asdasd@naver.com" },
+  { id: 1, "신고 종류": "신고종류", 이름: "이름", 이메일: "이메일", 전화번호: "전화번호", 내용: "내용", "조치 내용": "조치내용", 경고누적: "경고누적", 등록일시: "등록일시" },
+  { id: 2, "신고 종류": "신고종류", 이름: "이름", 이메일: "이메일", 전화번호: "전화번호", 내용: "내용", "조치 내용": "조치내용", 경고누적: "경고누적", 등록일시: "등록일시" },
+  { id: 3, "신고 종류": "신고종류", 이름: "이름", 이메일: "이메일", 전화번호: "전화번호", 내용: "내용", "조치 내용": "조치내용", 경고누적: "경고누적", 등록일시: "등록일시" },
+  { id: 4, "신고 종류": "신고종류", 이름: "이름", 이메일: "이메일", 전화번호: "전화번호", 내용: "내용", "조치 내용": "조치내용", 경고누적: "경고누적", 등록일시: "등록일시" },
+  { id: 5, "신고 종류": "신고종류", 이름: "이름", 이메일: "이메일", 전화번호: "전화번호", 내용: "내용", "조치 내용": "조치내용", 경고누적: "경고누적", 등록일시: "등록일시" },
+  { id: 6, "신고 종류": "신고종류", 이름: "이름", 이메일: "이메일", 전화번호: "전화번호", 내용: "내용", "조치 내용": "조치내용", 경고누적: "경고누적", 등록일시: "등록일시" },
+  { id: 7, "신고 종류": "신고종류", 이름: "이름", 이메일: "이메일", 전화번호: "전화번호", 내용: "내용", "조치 내용": "조치내용", 경고누적: "경고누적", 등록일시: "등록일시" },
+  { id: 8, "신고 종류": "신고종류", 이름: "이름", 이메일: "이메일", 전화번호: "전화번호", 내용: "내용", "조치 내용": "조치내용", 경고누적: "경고누적", 등록일시: "등록일시" },
+  { id: 9, "신고 종류": "신고종류", 이름: "이름", 이메일: "이메일", 전화번호: "전화번호", 내용: "내용", "조치 내용": "조치내용", 경고누적: "경고누적", 등록일시: "등록일시" },
+  { id: 10, "신고 종류": "신고종류", 이름: "이름", 이메일: "이메일", 전화번호: "전화번호", 내용: "내용", "조치 내용": "조치내용", 경고누적: "경고누적", 등록일시: "등록일시" },
+  { id: 11, "신고 종류": "신고종류", 이름: "이름", 이메일: "이메일", 전화번호: "전화번호", 내용: "내용", "조치 내용": "조치내용", 경고누적: "경고누적", 등록일시: "등록일시" },
+  { id: 12, "신고 종류": "신고종류", 이름: "이름", 이메일: "이메일", 전화번호: "전화번호", 내용: "내용", "조치 내용": "조치내용", 경고누적: "경고누적", 등록일시: "등록일시" },
+  { id: 13, "신고 종류": "신고종류", 이름: "이름", 이메일: "이메일", 전화번호: "전화번호", 내용: "내용", "조치 내용": "조치내용", 경고누적: "경고누적", 등록일시: "등록일시" },
 ];
 
 const columns: GridColDef[] = [
-  { field: "col1", headerName: "Column 1", width: 150 },
-  { field: "col2", headerName: "Column 2", width: 150 },
-  { field: "col3", headerName: "Column 3", width: 150 },
+  { field: "신고 종류", headerName: "신고 종류", width: 150 },
+  { field: "이름", headerName: "이름", width: 100 },
+  { field: "이메일", headerName: "이메일", width: 200 },
+  { field: "전화번호", headerName: "전화번호", width: 200 },
+  { field: "내용", headerName: "내용", width: 200 },
+  { field: "조치 내용", headerName: "조치 내용", width: 150 },
+  { field: "경고누적", headerName: "경고누적", width: 100 },
+  { field: "등록일시", headerName: "등록일시", width: 150 },
+  {
+    field: "처리하기",
+    headerName: "처리하기",
+    width: 100,
+    renderCell: (rows) => (
+      <button
+        onClick={() => {
+          alert(`${rows.id}번쨰 처리하기 버튼`);
+        }}
+      >
+        처리하기
+      </button>
+    ),
+  },
 ];
 
 const TopContent = styled.div`
@@ -29,6 +57,7 @@ export default function CsPage() {
   // 아트보드 : 2. CS 관리
   // WBS : CS 관리
   const [paginationModel, setPaginationModel] = useState({ page: 0, pageSize: 10 });
+
   return (
     <Template title="CS관리">
       <>
@@ -36,7 +65,7 @@ export default function CsPage() {
           <TableHeader setNoticeList={() => {}} />
         </TopContent>
         <BodyContent>
-          <div style={{ height: 300, width: "100%" }}>
+          <div style={{ width: "100%" }}>
             <DataGrid
               sx={{
                 "& .MuiDataGrid-cell:focus-within, &.MuiDataGrid-cell:focus": {
