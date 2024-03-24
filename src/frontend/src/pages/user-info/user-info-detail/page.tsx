@@ -42,43 +42,48 @@ interface IData {
   data: IUser;
 }
 
-const Wrap = styled.div``;
-const Form = styled.form``;
-const FormControlStyle = styled(FormControl)``;
-const Label = styled.label``;
-const Input = styled.input``;
-const Text = styled(TextField)`
-  font-size: 20px;
+const Wrap = styled.div`
+  padding: 30px 0;
 `;
-const Test1 = styled(FormLabel)``;
-const Test2 = styled(FormControlLabel)``;
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+`;
+const FormControlWrap = styled(FormControl)`
+  &:not(:first-child) {
+    margin-top: 40px;
+  }
+  display: flex !important;
+  align-items: center;
+  flex-direction: row !important;
+`;
+const Label = styled.label``;
 
-<<<<<<< HEAD
+const Input = styled.input``;
+
+const TextFieldWrap = styled(TextField)`
+  min-width: 150px;
+  max-width: 50%;
+
+  font-size: 20px;
+  &:first-child {
+    margin-right: 20px;
+  }
+`;
+
 interface ILanguageItemFunc {
-  l: string;
-=======
-interface IMenuItemFunc {
   index: number;
   value: string;
->>>>>>> c56ca74ac566ee43cb8cd93070c80af64f2e36f9
   text: string;
 }
 
 // Iterator Component
-<<<<<<< HEAD
-const LanguageItemFunc = ({ l, text }: ILanguageItemFunc) => {
-  console.log(l, text);
-  console.log(<MenuItem value={l}>{text}</MenuItem>);
-
-  return <MenuItem value={l}>{text}</MenuItem>;
-=======
-const MenuItemFunc = ({ index, value, text }: IMenuItemFunc) => {
+const languageItemFunc = ({ index, value, text }: ILanguageItemFunc) => {
   return (
     <MenuItem key={index} value={value}>
       {text}
     </MenuItem>
   );
->>>>>>> c56ca74ac566ee43cb8cd93070c80af64f2e36f9
 };
 
 export default function UserInfoDetailPage() {
@@ -87,6 +92,7 @@ export default function UserInfoDetailPage() {
   const { data } = useLoaderData() as IData;
   const [gender, setGender] = useState("female");
   const [language, setLanguage] = useState("");
+  const [subscription, setSubscription] = useState("");
 
   const genderRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setGender((event.target as HTMLInputElement).value);
@@ -96,29 +102,12 @@ export default function UserInfoDetailPage() {
     setLanguage(event.target.value);
   };
 
-<<<<<<< HEAD
-  // 언어 리스트
-  const languageItems: ILanguageItemFunc[] = [
-    { value: "ko", text: "한국어" },
-    { value: "en", text: "영어" },
-    { value: "sp", text: "스페인어" },
-    { value: "gr", text: "그리스어" },
-    { value: "po", text: "폴란드어" },
-    { value: "tk", text: "터키어" },
-    { value: "zh-cn", text: "중국어" },
-    { value: "fr", text: "프랑스어" },
-    { value: "it", text: "이탈리아어" },
-    { value: "ru", text: "러시아어" },
-    { value: "ar", text: "아랍어" },
-    { value: "zhs", text: "중국어간체" },
-    { value: "zht", text: "중국어번체" },
-=======
-  const handleChange = (event: SelectChangeEvent) => {
-    setAge(event.target.value as string);
+  const subscriptionChange = (event: SelectChangeEvent) => {
+    setSubscription(event.target.value);
   };
 
   // 사이드바 메뉴
-  const menuItems: IMenuItemFunc[] = [
+  const languageItems: ILanguageItemFunc[] = [
     { index: 1, value: "ko", text: "한국어" },
     { index: 2, value: "en", text: "영어" },
     { index: 3, value: "sp", text: "스페인어" },
@@ -132,7 +121,6 @@ export default function UserInfoDetailPage() {
     { index: 11, value: "ar", text: "아랍어" },
     { index: 12, value: "zhs", text: "중국어간체" },
     { index: 13, value: "zht", text: "중국어번체" },
->>>>>>> c56ca74ac566ee43cb8cd93070c80af64f2e36f9
   ];
 
   return (
@@ -140,65 +128,56 @@ export default function UserInfoDetailPage() {
       <Await resolve={data}>
         {(user: IUser) => {
           return (
-            <div>
-              <Template title="회원 정보 상세">
-                <Wrap>
-                  <Form>
-                    {/* 닉네임 */}
-                    <FormControl>
-                      <TextField label="닉네임" variant="outlined" defaultValue={user.displayName} color="secondary" inputProps={{ style: { fontSize: "20px" } }} />
-                    </FormControl>
-                    {/* 아이디 */}
-                    <FormControl>
-                      <TextField label="아이디" variant="filled" value={user.id} color="secondary" inputProps={{ style: { fontSize: "20px" } }} disabled />
-                    </FormControl>
-                    {/* 이메일 */}
-                    <FormControl>
-                      <TextField label="이메일" variant="filled" value={user.email} color="secondary" inputProps={{ style: { fontSize: "20px" } }} disabled />
-                    </FormControl>
-                    {/* 비밀번호 */}
-                    <FormControl>
-                      <TextField type="password" label="비밀번호" variant="outlined" color="secondary" inputProps={{ style: { fontSize: "20px" } }} />
-                      <TextField type="password" label="비밀번호 확인" variant="outlined" color="secondary" inputProps={{ style: { fontSize: "20px" } }} />
-                    </FormControl>
-                    {/* 성별 */}
-                    <FormControl>
-                      <FormLabel id="demo-controlled-radio-buttons-group" color="secondary">
-                        성별
-                      </FormLabel>
-                      <RadioGroup aria-labelledby="demo-controlled-radio-buttons-group" name="controlled-radio-buttons-group" value={gender} onChange={genderRadioChange}>
-                        <FormControlLabel value="female" control={<Radio color="secondary" />} label="여자" />
-                        <FormControlLabel value="male" control={<Radio color="secondary" />} label="남자" />
-                      </RadioGroup>
-                    </FormControl>
-                    {/* 언어 */}
-                    {/* <FormControl> */}
+            <Template title="회원 정보 상세">
+              <Wrap>
+                <Form>
+                  {/* 아이디 / 이메일 */}
+                  <FormControlWrap>
+                    <TextFieldWrap label="아이디" variant="filled" value={user.id} color="secondary" inputProps={{ style: { fontSize: "20px" } }} disabled />
+                    <TextFieldWrap label="이메일" variant="filled" value={user.email} color="secondary" inputProps={{ style: { fontSize: "20px" } }} disabled />
+                  </FormControlWrap>
+                  {/* 닉네임 */}
+                  <FormControlWrap>
+                    <TextFieldWrap label="닉네임" variant="outlined" defaultValue={user.displayName} color="secondary" inputProps={{ style: { fontSize: "20px" } }} />
+                  </FormControlWrap>
+                  {/* 비밀번호 */}
+                  <FormControlWrap>
+                    <TextFieldWrap type="password" label="비밀번호" variant="outlined" color="secondary" inputProps={{ style: { fontSize: "20px" } }} />
+                    <TextFieldWrap type="password" label="비밀번호 확인" variant="outlined" color="secondary" inputProps={{ style: { fontSize: "20px" } }} />
+                  </FormControlWrap>
+                  {/* 성별 */}
+                  <FormControlWrap>
+                    <RadioGroup aria-labelledby="demo-controlled-radio-buttons-group" name="controlled-radio-buttons-group" value={gender} onChange={genderRadioChange}>
+                      <FormControlLabel value="female" control={<Radio color="secondary" />} label="여자" />
+                      <FormControlLabel value="male" control={<Radio color="secondary" />} label="남자" />
+                    </RadioGroup>
+                  </FormControlWrap>
+                  {/* 언어 */}
+                  <FormControlWrap sx={{ m: 1 }}>
                     <Box sx={{ minWidth: 120 }}>
-                      <FormControl fullWidth>
-<<<<<<< HEAD
-                        <InputLabel id="demo-simple-select-label">Age</InputLabel>
-                        <Select labelId="demo-simple-select-label" id="demo-simple-select" value={age} label="Age" onChange={handleChange}>
-                          <MenuItem value={10}>Ten</MenuItem>
-                          <MenuItem value={20}>Twenty</MenuItem>
-                          <MenuItem value={30}>Thirty</MenuItem>
-=======
+                      <FormControlWrap fullWidth>
                         <InputLabel id="demo-simple-select-label">언어</InputLabel>
-                        <Select value={language} label="언어" onChange={languageChange}>
-                          {menuItems.map(MenuItemFunc)}
->>>>>>> c56ca74ac566ee43cb8cd93070c80af64f2e36f9
+                        <Select defaultValue={user.language} label="언어" onChange={languageChange}>
+                          {languageItems.map(languageItemFunc)}
                         </Select>
-                      </FormControl>
+                      </FormControlWrap>
                     </Box>
-                    {/* </FormControl> */}
-                    {/* 구독 */}
-                    <FormControl>
-                      <Label>구독</Label>
-                      <Input value="thor@naver.com" readOnly></Input>
-                    </FormControl>
-                  </Form>
-                </Wrap>
-              </Template>
-            </div>
+                  </FormControlWrap>
+                  {/* 구독 */}
+                  <FormControlWrap sx={{ m: 1, minWidth: 80 }}>
+                    <Box sx={{ minWidth: 120 }}>
+                      <FormControlWrap fullWidth>
+                        <InputLabel id="demo-simple-select-label">구독</InputLabel>
+                        <Select defaultValue={user.issubscription ? "구독 중" : "구독취소"} label="구독" onChange={subscriptionChange}>
+                          <MenuItem value={"구독 중"}>구독 중</MenuItem>
+                          <MenuItem value={"구독취소"}>구독취소</MenuItem>
+                        </Select>
+                      </FormControlWrap>
+                    </Box>
+                  </FormControlWrap>
+                </Form>
+              </Wrap>
+            </Template>
           );
         }}
       </Await>
