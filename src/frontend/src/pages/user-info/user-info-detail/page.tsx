@@ -72,22 +72,14 @@ const TextFieldWrap = styled(TextField)`
   }
 `;
 
-<<<<<<< HEAD
-interface IMenuItemFunc {
-=======
 interface ILanguageItemFunc {
->>>>>>> 6824212e00fb0663f33de808b6816173bd6976fe
   index: number;
   value: string;
   text: string;
 }
 
 // Iterator Component
-<<<<<<< HEAD
-const MenuItemFunc = ({ index, value, text }: IMenuItemFunc) => {
-=======
 const languageItemFunc = ({ index, value, text }: ILanguageItemFunc) => {
->>>>>>> 6824212e00fb0663f33de808b6816173bd6976fe
   return (
     <MenuItem key={index} value={value}>
       {text}
@@ -122,13 +114,10 @@ export default function UserInfoDetailPage() {
     setLanguage(event.target.value);
   };
 
-<<<<<<< HEAD
-=======
   const subscriptionChange = (event: SelectChangeEvent) => {
     setSubscription(event.target.value);
   };
 
->>>>>>> 6824212e00fb0663f33de808b6816173bd6976fe
   // 사이드바 메뉴
   const languageItems: ILanguageItemFunc[] = [
     { index: 1, value: "ko", text: "한국어" },
@@ -182,17 +171,10 @@ export default function UserInfoDetailPage() {
                   {/* 언어 / 구독*/}
                   <FormControlWrap>
                     <Box sx={{ minWidth: 120 }}>
-<<<<<<< HEAD
-                      <FormControl fullWidth>
-                        <InputLabel id="demo-simple-select-label">언어</InputLabel>
-                        <Select value={language} label="언어" onChange={languageChange}>
-                          {menuItems.map(MenuItemFunc)}
-=======
                       <FormControlWrap fullWidth>
                         <InputLabel id="demo-simple-select-label">언어</InputLabel>
                         <Select defaultValue={user.language} label="언어" onChange={languageChange}>
                           {languageItems.map(languageItemFunc)}
->>>>>>> 6824212e00fb0663f33de808b6816173bd6976fe
                         </Select>
                       </FormControlWrap>
                     </Box>
