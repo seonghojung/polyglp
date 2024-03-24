@@ -97,9 +97,22 @@ export default function UserInfoDetailPage() {
   const [displayName, setDisplayName] = useState(""); // 닉네임
   const [isDuplicate, setIsDuplicate] = useState(false); // 중복 체크 결과
 
+  const displayNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setDisplayName(event.target.value);
+  };
+
   const checkDisplayNameDuplicateFunc = async () => {
+    const requestBody = { displayName };
+
     // API 컨트롤러의 특정 함수를 호출합니다.
-    const response = await fetch(`${BASE_URL}/api/check-displayName-duplicate`, { method: "POST", credentials: "include" });
+    const response = await fetch(`${BASE_URL}/api/check-displayName-duplicate`, {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(requestBody),
+    });
     if (response.ok) {
       const responseData = await response.json();
       console.log(responseData);
@@ -150,7 +163,7 @@ export default function UserInfoDetailPage() {
                   </FormControlWrap>
                   {/* 닉네임 */}
                   <FormControlWrap>
-                    <TextFieldWrap label="닉네임" variant="outlined" defaultValue={user.displayName} color="secondary" inputProps={{ style: { fontSize: "20px" } }} />
+                    <TextFieldWrap label="닉네임" variant="outlined" defaultValue={user.displayName} color="secondary" inputProps={{ style: { fontSize: "20px" } }} onChange={displayNameChange} />
                     <Button color="inherit" variant="contained" onClick={checkDisplayNameDuplicateFunc}>
                       중복확인
                     </Button>
