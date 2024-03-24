@@ -142,7 +142,7 @@ interface IMenuItemFunc {
 }
 
 // Iterator Component
-const MenuItemFunc: React.FC<IMenuItemFunc> = ({ to, iconSrc, activeIconSrc, text, alarmCount }) => {
+const MenuItemFunc = ({ to, iconSrc, activeIconSrc, text, alarmCount }: IMenuItemFunc) => {
   const location = useLocation();
   const isActive = location.pathname === to;
 
