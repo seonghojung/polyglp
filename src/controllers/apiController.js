@@ -81,7 +81,6 @@ export const postCheckDisplayNameDuplicate = async (req, res) => {
 
     clientQueryFunc(checkDisplayNameQuery, displayName);
 
-    // res.status(200).json({ msg: "success", evilReportAlarmCount, qnaAlarmCount, adminUserID });
     res.status(200).json({ msg: "success" });
   } catch (err) {
     console.log(err);

@@ -94,18 +94,15 @@ export default function UserInfoDetailPage() {
   const [gender, setGender] = useState("female");
   const [language, setLanguage] = useState("");
   const [subscription, setSubscription] = useState("");
-  const [isDuplicate, setIsDuplicate] = useState(false);
+  const [displayName, setDisplayName] = useState(""); // 닉네임
+  const [isDuplicate, setIsDuplicate] = useState(false); // 중복 체크 결과
 
   const checkDisplayNameDuplicateFunc = async () => {
     // API 컨트롤러의 특정 함수를 호출합니다.
-    const response = await fetch(`${BASE_URL}/api/check-displayName-infos`, { method: "POST", credentials: "include" });
+    const response = await fetch(`${BASE_URL}/api/check-displayName-duplicate`, { method: "POST", credentials: "include" });
     if (response.ok) {
       const responseData = await response.json();
-
-      const { evilReportAlarmCount, qnaAlarmCount } = responseData;
-      // setEvilReportAlarmCount(evilReportAlarmCount);
-      // setQnaAlarmCount(qnaAlarmCount);
-      // setAdminUserID(adminUserID);
+      console.log(responseData);
     }
   };
 
