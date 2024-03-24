@@ -54,15 +54,18 @@ const Test1 = styled(FormLabel)``;
 const Test2 = styled(FormControlLabel)``;
 
 interface IMenuItemFunc {
+  index: number;
   value: string;
   text: string;
 }
 
 // Iterator Component
-const MenuItemFunc = ({ value, text }: IMenuItemFunc) => {
-  console.log(value, text);
-
-  return <MenuItem value={value}>{text}</MenuItem>;
+const MenuItemFunc = ({ index, value, text }: IMenuItemFunc) => {
+  return (
+    <MenuItem key={index} value={value}>
+      {text}
+    </MenuItem>
+  );
 };
 
 export default function UserInfoDetailPage() {
@@ -86,19 +89,19 @@ export default function UserInfoDetailPage() {
 
   // 사이드바 메뉴
   const menuItems: IMenuItemFunc[] = [
-    { value: "ko", text: "한국어" },
-    { value: "en", text: "영어" },
-    { value: "sp", text: "스페인어" },
-    { value: "gr", text: "그리스어" },
-    { value: "po", text: "폴란드어" },
-    { value: "tk", text: "터키어" },
-    { value: "zh-cn", text: "중국어" },
-    { value: "fr", text: "프랑스어" },
-    { value: "it", text: "이탈리아어" },
-    { value: "ru", text: "러시아어" },
-    { value: "ar", text: "아랍어" },
-    { value: "zhs", text: "중국어간체" },
-    { value: "zht", text: "중국어번체" },
+    { index: 1, value: "ko", text: "한국어" },
+    { index: 2, value: "en", text: "영어" },
+    { index: 3, value: "sp", text: "스페인어" },
+    { index: 4, value: "gr", text: "그리스어" },
+    { index: 5, value: "po", text: "폴란드어" },
+    { index: 6, value: "tk", text: "터키어" },
+    { index: 7, value: "zh-cn", text: "중국어" },
+    { index: 8, value: "fr", text: "프랑스어" },
+    { index: 9, value: "it", text: "이탈리아어" },
+    { index: 10, value: "ru", text: "러시아어" },
+    { index: 11, value: "ar", text: "아랍어" },
+    { index: 12, value: "zhs", text: "중국어간체" },
+    { index: 13, value: "zht", text: "중국어번체" },
   ];
 
   return (
@@ -142,12 +145,8 @@ export default function UserInfoDetailPage() {
                     <Box sx={{ minWidth: 120 }}>
                       <FormControl fullWidth>
                         <InputLabel id="demo-simple-select-label">언어</InputLabel>
-                        <Select labelId="demo-simple-select-label" id="demo-simple-select" value={language} label="언어" onChange={languageChange}>
-                          {menuItems.map((item, index) => {
-                            console.log(item.value);
-                            return <MenuItemFunc key={index} value={item.value} text={item.text} />;
-                          })}
-                          <MenuItem value="ko">ko</MenuItem>
+                        <Select value={language} label="언어" onChange={languageChange}>
+                          {menuItems.map(MenuItemFunc)}
                         </Select>
                       </FormControl>
                     </Box>
