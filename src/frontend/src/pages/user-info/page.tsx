@@ -1,7 +1,7 @@
 import { DataGrid, GridColDef, GridRowsProp } from "@mui/x-data-grid";
 import { useState } from "react";
 import Template from "../components/Template";
-import { BASE_URL } from "../../App";
+// import { BASE_URL } from "../../App";
 import styled from "styled-components";
 import { TextField } from "@mui/material";
 
