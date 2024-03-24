@@ -53,35 +53,35 @@ export const postSidebarInfos = async (req, res) => {
 // 닉네임 중복 체크
 export const postCheckDisplayNameDuplicate = async (req, res) => {
   try {
-    const { displayName } = req.body;
-    // 변수
-    let isDuplicate = false;
+    console.log(req.body);
+    // const { displayName } = req.body;
+    // // 변수
+    // let isDuplicate = false;
 
-    // 쿼리
-    const checkDisplayNameQuery = "SELECT COUNT(*) AS count FROM users WHERE displayName = $1";
+    // // 쿼리
+    // const checkDisplayNameQuery = "SELECT COUNT(*) AS count FROM users WHERE displayName = $1";
 
-    const clientQueryFunc = (query, newDisplayName) => {
-      client.query(query, (err, result) => {
-        if (err) {
-          console.error("Error executing query", err);
-          res.status(500).send("Error executing query");
-          return;
-        }
-        const count = result.rows[0].count;
-        if (count > 0) {
-          // 닉네임이 중복됨
-          isDuplicate = true;
-          console.log("닉네임 중복: ", newDisplayName);
-        } else {
-          // 중복 없음
-          console.log("닉네임 중복 없음: ", newDisplayName);
-        }
-      });
-    };
+    // const clientQueryFunc = (query, newDisplayName) => {
+    //   client.query(query, (err, result) => {
+    //     if (err) {
+    //       console.error("Error executing query", err);
+    //       res.status(500).send("Error executing query");
+    //       return;
+    //     }
+    //     const count = result.rows[0].count;
+    //     if (count > 0) {
+    //       // 닉네임이 중복됨
+    //       isDuplicate = true;
+    //       console.log("닉네임 중복: ", newDisplayName);
+    //     } else {
+    //       // 중복 없음
+    //       console.log("닉네임 중복 없음: ", newDisplayName);
+    //     }
+    //   });
+    // };
 
-    clientQueryFunc(checkDisplayNameQuery, displayName);
+    // clientQueryFunc(checkDisplayNameQuery, displayName);
 
-    // res.status(200).json({ msg: "success", evilReportAlarmCount, qnaAlarmCount, adminUserID });
     res.status(200).json({ msg: "success" });
   } catch (err) {
     console.log(err);

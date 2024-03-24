@@ -8,13 +8,19 @@ import { BASE_URL } from "./Types";
 const SidebarWrap = styled.div`
   width: 290px;
   flex: 1 0 auto;
-  position: relative;
+  position: fixed;
+  left: 0;
+  z-index: 100;
   height: calc(100vh - 79px);
   padding: 44px 28px 35px 32px;
   border-top-right-radius: 25px;
   border-bottom-right-radius: 25px;
   background-color: #280559;
   transition: width 0.3s ease-in-out;
+  overflow: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
   &.animation {
     width: 58px;
     transition: width 0.3s ease-in-out;
