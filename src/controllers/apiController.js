@@ -4,11 +4,12 @@ import client from "../db";
 // 관리자 정보, cs, 고객문의 미처리건
 export const postSidebarInfos = async (req, res) => {
   try {
-    console.log(req.user);
-    // TODO: 로그인한 관리자 정보 받아오기
+    // 변수
     let evilReportAlarmCount = 0;
     let qnaAlarmCount = 0;
-
+    // const adminUserID = req.user;
+    // console.log(req.user);
+    // 쿼리
     const evilReportsQuery = "SELECT * FROM evil_reports";
     const qnaQuery = "SELECT * FROM qna";
     const loginLogQuery = "SELECT * FROM login_logs";
@@ -41,6 +42,7 @@ export const postSidebarInfos = async (req, res) => {
     clientQueryFunc(qnaQuery, "qna");
     clientQueryFunc(loginLogQuery, "loginLog");
 
+    // res.status(200).json({ msg: "success", evilReportAlarmCount, qnaAlarmCount, adminUserID });
     res.status(200).json({ msg: "success", evilReportAlarmCount, qnaAlarmCount });
   } catch (err) {
     console.log(err);

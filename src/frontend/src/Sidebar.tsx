@@ -163,6 +163,7 @@ export default function Sidebar() {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false); // 사이드바 collapse
   const [evilReportAlarmCount, setEvilReportAlarmCount] = useState(0);
   const [qnaAlarmCount, setQnaAlarmCount] = useState(0);
+  // const [adminUserID, setAdminUserID] = useState("");
   // 관리자 정보, cs, 고객문의 미처리건
   useEffect(() => {
     // postSidebarInfos
@@ -173,10 +174,11 @@ export default function Sidebar() {
         const response = await fetch(`${BASE_URL}/api/sidebar-infos`, { method: "POST", credentials: "include" });
         if (response.ok) {
           const responseData = await response.json();
-          // TODO: 로그인한 관리자 정보 받아오기
+
           const { evilReportAlarmCount, qnaAlarmCount } = responseData;
           setEvilReportAlarmCount(evilReportAlarmCount);
           setQnaAlarmCount(qnaAlarmCount);
+          // setAdminUserID(adminUserID);
         }
       } catch (error) {
         // 오류 처리를 수행합니다.
@@ -233,9 +235,6 @@ export default function Sidebar() {
     { to: "/setting", iconSrc: "/images/sidebar/setting.png", activeIconSrc: "/images/sidebar/setting-active.png", text: "설정", alarmCount: 0 },
   ];
 
-  // 알림 카운트
-  // useState
-  // useEffect(fetch => 폴리글립 백엔드 DB 접근 => )
   return (
     <SidebarWrap className={isSidebarCollapsed ? "animation" : ""}>
       <MenuToggleBtn onClick={toggleSidebar}>
@@ -246,14 +245,7 @@ export default function Sidebar() {
           <TopTitle>MENU</TopTitle>
           <MenuItems>
             {menuItems.map((item, index) => (
-              <MenuItemFunc
-                key={index}
-                to={item.to}
-                iconSrc={item.iconSrc}
-                activeIconSrc={item.activeIconSrc}
-                text={item.text}
-                alarmCount={item.alarmCount}
-              />
+              <MenuItemFunc key={index} to={item.to} iconSrc={item.iconSrc} activeIconSrc={item.activeIconSrc} text={item.text} alarmCount={item.alarmCount} />
             ))}
           </MenuItems>
         </ToggleTopWrap>
@@ -261,8 +253,8 @@ export default function Sidebar() {
         <ToggleBottomWrap>
           <AdminInfoWrap>
             <InfoCenterWrap className={isSidebarCollapsed ? "" : "active"}>
-              <AdminName>관리자1</AdminName>
-              <AdminEmail>thor@naver.com</AdminEmail>
+              <AdminName>관리자</AdminName>
+              <AdminEmail>thor@amin.com</AdminEmail>
             </InfoCenterWrap>
             {/* TODO: 로그아웃 링크 */}
             <LogoutWrap>
