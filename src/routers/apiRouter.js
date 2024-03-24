@@ -1,6 +1,6 @@
 import passport from "passport";
 import express from "express";
-import { postSidebarInfos } from "../controllers/apiController";
+import { postSidebarInfos, postCheckDisplayNameDuplicate } from "../controllers/apiController";
 import client from "../db";
 import { BASE_URL } from "../util";
 
@@ -73,6 +73,8 @@ apiRouter.post("/login", async (req, res, next) => {
     });
   })(req, res, next);
 });
+
+apiRouter.post("/check-displayName-duplicate", postCheckDisplayNameDuplicate);
 
 apiRouter.use((_, res) => {
   res.status(405).send("[/api] - Method Not Allowed");

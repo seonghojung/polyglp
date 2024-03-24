@@ -3,7 +3,7 @@ import { BASE_URL, language } from "../../../Types";
 import { Suspense, useState } from "react";
 import styled from "styled-components";
 import Template from "../../components/Template";
-import { FormLabel, InputLabel, Box, Radio, RadioGroup, FormControlLabel, MenuItem, FormControl, TextField } from "@mui/material";
+import { Stack, Button, FormLabel, InputLabel, Box, Radio, RadioGroup, FormControlLabel, MenuItem, FormControl, TextField } from "@mui/material";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 
 export interface IUser {
@@ -57,14 +57,15 @@ const FormControlWrap = styled(FormControl)`
   align-items: center;
   flex-direction: row !important;
 `;
-const Label = styled.label``;
-
-const Input = styled.input``;
+const RadioGroupWrap = styled(RadioGroup)`
+  display: flex !important;
+  align-items: center;
+  flex-direction: row !important;
+`;
 
 const TextFieldWrap = styled(TextField)`
   min-width: 150px;
   max-width: 50%;
-
   font-size: 20px;
   &:first-child {
     margin-right: 20px;
@@ -93,6 +94,20 @@ export default function UserInfoDetailPage() {
   const [gender, setGender] = useState("female");
   const [language, setLanguage] = useState("");
   const [subscription, setSubscription] = useState("");
+  const [isDuplicate, setIsDuplicate] = useState(false);
+
+  const checkDisplayNameDuplicateFunc = async () => {
+    // API 컨트롤러의 특정 함수를 호출합니다.
+    const response = await fetch(`${BASE_URL}/api/check-displayName-infos`, { method: "POST", credentials: "include" });
+    if (response.ok) {
+      const responseData = await response.json();
+
+      const { evilReportAlarmCount, qnaAlarmCount } = responseData;
+      // setEvilReportAlarmCount(evilReportAlarmCount);
+      // setQnaAlarmCount(qnaAlarmCount);
+      // setAdminUserID(adminUserID);
+    }
+  };
 
   const genderRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setGender((event.target as HTMLInputElement).value);
@@ -139,6 +154,10 @@ export default function UserInfoDetailPage() {
                   {/* 닉네임 */}
                   <FormControlWrap>
                     <TextFieldWrap label="닉네임" variant="outlined" defaultValue={user.displayName} color="secondary" inputProps={{ style: { fontSize: "20px" } }} />
+                    <Button color="inherit" variant="contained" onClick={checkDisplayNameDuplicateFunc}>
+                      중복확인
+                    </Button>
+                    <TextFieldWrap type="checkbox" name="isDuplicated" />
                   </FormControlWrap>
                   {/* 비밀번호 */}
                   <FormControlWrap>
@@ -147,13 +166,13 @@ export default function UserInfoDetailPage() {
                   </FormControlWrap>
                   {/* 성별 */}
                   <FormControlWrap>
-                    <RadioGroup aria-labelledby="demo-controlled-radio-buttons-group" name="controlled-radio-buttons-group" value={gender} onChange={genderRadioChange}>
+                    <RadioGroupWrap aria-labelledby="demo-controlled-radio-buttons-group" name="controlled-radio-buttons-group" value={gender} onChange={genderRadioChange}>
                       <FormControlLabel value="female" control={<Radio color="secondary" />} label="여자" />
                       <FormControlLabel value="male" control={<Radio color="secondary" />} label="남자" />
-                    </RadioGroup>
+                    </RadioGroupWrap>
                   </FormControlWrap>
-                  {/* 언어 */}
-                  <FormControlWrap sx={{ m: 1 }}>
+                  {/* 언어 / 구독*/}
+                  <FormControlWrap>
                     <Box sx={{ minWidth: 120 }}>
                       <FormControlWrap fullWidth>
                         <InputLabel id="demo-simple-select-label">언어</InputLabel>
@@ -162,9 +181,6 @@ export default function UserInfoDetailPage() {
                         </Select>
                       </FormControlWrap>
                     </Box>
-                  </FormControlWrap>
-                  {/* 구독 */}
-                  <FormControlWrap sx={{ m: 1, minWidth: 80 }}>
                     <Box sx={{ minWidth: 120 }}>
                       <FormControlWrap fullWidth>
                         <InputLabel id="demo-simple-select-label">구독</InputLabel>
@@ -174,6 +190,21 @@ export default function UserInfoDetailPage() {
                         </Select>
                       </FormControlWrap>
                     </Box>
+                  </FormControlWrap>
+                  <FormControlWrap>
+                    <Stack spacing={2} direction="row">
+                      <Button type="button" color="success" variant="contained">
+                        수정 완료
+                      </Button>
+                      {/* TODO: 차단처리시 어떤 값을 변경해야하는지 */}
+                      <Button color="error" variant="contained">
+                        차단 처리
+                      </Button>
+                      {/* TODO: 링크 처리를 해야할것으로 판단 */}
+                      <Button color="inherit" variant="contained">
+                        뒤로가기
+                      </Button>
+                    </Stack>
                   </FormControlWrap>
                 </Form>
               </Wrap>
