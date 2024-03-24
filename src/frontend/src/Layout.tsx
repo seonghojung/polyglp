@@ -13,6 +13,7 @@ const Header = styled.header`
 
 const Body = styled.div`
   width: 100%;
+  overflow: auto;
 `;
 
 export default function Layout() {
