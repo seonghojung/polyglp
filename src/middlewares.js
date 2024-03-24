@@ -1,4 +1,3 @@
-import moment from "moment-timezone";
 import multer from "multer";
 import multerS3 from "multer-s3";
 import { S3Client } from "@aws-sdk/client-s3";
@@ -41,8 +40,6 @@ export const uploadSampleDescImg = multerSampleDescImg.single("sampleDescImg");
 // export const uploadSampleImg = multerSampleImg.fields([{ name: "thumbnail1" }, { name: "thumbnail2" }]);
 
 export const localsMiddleware = (req, res, next) => {
-  // FIXME: 개발 모드, 실 서버 배포 시 prod로 변경 必
-  const mode = "dev";
   res.locals = {
     // --------------------- VARIABLES ---------------------
     // FIXME: 홈페이지 이름 수정 必
@@ -61,44 +58,6 @@ export const localsMiddleware = (req, res, next) => {
     youtubeLink: "https://www.youtube.com/",
     // 캐시 삭제 방지용 Date Query
     versionDateQuery: new Date().getTime(),
-    // ----------------------- REGEX -----------------------
-    // --------------------- FUNCTIONS ---------------------
-    // 시간 계산
-    calcMomentTZ: (time) => {
-      let calcTime;
-      if (mode === "dev") {
-        calcTime = moment(time);
-      } else if (mode === "prod") {
-        calcTime = moment(time).subtract(9, "hours");
-      }
-      return calcTime;
-    },
-    // 세자리 수마다 콤마 추가
-    addComma: (number) => {
-      const regexp = /\B(?=(\d{3})+(?!\d))/g;
-      return number.toString().replace(regexp, ",");
-    },
-    // 날짜 형식 변환
-    dateFormatYMD: (date) => moment(date).tz("Asia/Seoul").format("YYYY-MM-DD"),
-    dateFormatYMDHm: (date) => moment(date).tz("Asia/Seoul").format("YYYY-MM-DD HH:mm"),
-    dateFormatYMDHms: (date) => moment(date).tz("Asia/Seoul").format("YYYY-MM-DD HH:mm:ss"),
-    // 해당하는 문자열 모두 치환
-    replaceAll: (str, searchStr, replaceStr) => str.split(searchStr).join(replaceStr),
-    // 배열 Random 섞기
-    shuffleArray: (arr) => {
-      for (let i = arr.length - 1; i > 0; i -= 1) {
-        const j = Math.floor(Math.random() * (i + 1));
-        const temp = arr[i];
-        arr[i] = arr[j];
-        arr[j] = temp;
-      }
-      return arr;
-    },
-    // 배열에 특정 문자열 포함되어 있는지 체크하는 함수
-    arrIncludesStr: (arr, str) => {
-      const arr2 = arr.map((x) => String(x._id));
-      return arr2.includes(str);
-    },
   };
   next();
 };

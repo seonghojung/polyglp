@@ -2,6 +2,7 @@ import passport from "passport";
 import express from "express";
 import { postSidebarInfos } from "../controllers/apiController";
 import client from "../db";
+import { BASE_URL } from "../util";
 
 const apiRouter = express.Router();
 
@@ -67,7 +68,7 @@ apiRouter.post("/login", async (req, res, next) => {
     if (!user) return res.send(`로그인 정보가 잘못되었습니다.`);
     return req.logIn(user, (e) => {
       if (err) return next(e);
-      return res.status(200).redirect("https://localhost:3000/dashboard");
+      return res.status(200).redirect(`${BASE_URL}/dashboard`);
     });
   })(req, res, next);
 });

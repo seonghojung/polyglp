@@ -15,6 +15,7 @@ import "./passport";
 const app = express();
 
 const isDevMode = process.env.mode === "dev";
+
 if (isDevMode) {
   app.use(cors());
   app.set("trust proxy", 1);
@@ -39,17 +40,6 @@ app.use(
 
 app.use(passport.initialize());
 app.use(passport.session());
-
-// 세션 작동테스트
-app.get("/test", (req, res, next) => {
-  if (req.session.views) {
-    req.session.views += 1;
-    res.status(200).json({ message: req.session.views });
-  } else {
-    req.session.views = 1;
-    res.status(200).json({ message: "welcome to the session demo. refresh!" });
-  }
-});
 
 // ping
 app.get("/ping", (req, res) => {
