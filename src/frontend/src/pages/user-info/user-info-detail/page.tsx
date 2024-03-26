@@ -116,8 +116,6 @@ const FormWrap = ({ user }: any) => {
   const [displayName, setDisplayName] = useState(user.displayName); // 닉네임
   const [isDuplicate, setIsDuplicate] = useState(false); // 중복 체크 결과
 
-  
-
   const checkDisplayNameDuplicateFunc = async () => {
     // API 컨트롤러의 특정 함수를 호출합니다.
     const response = await fetch(`${BASE_URL}/api/check-displayName-duplicate`, {
@@ -133,10 +131,6 @@ const FormWrap = ({ user }: any) => {
       setIsDuplicate(responseData.isDuplicate);
     }
   };
-
-  useEffect(() => {
-    console.log(isDuplicate, "effect");
-  }, [isDuplicate]);
 
   const genderRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setGender((event.target as HTMLInputElement).value);
@@ -177,11 +171,18 @@ const FormWrap = ({ user }: any) => {
         </FormControlWrap>
         {/* 닉네임 */}
         <FormControlWrap>
-          <TextFieldWrap label="닉네임" variant="outlined" defaultValue={user.displayName} color="secondary" inputProps={{ style: { fontSize: "20px" } }} onChange={(e)=>setDisplayName(e.target.value)}/>
+          <TextFieldWrap
+            label="닉네임"
+            variant="outlined"
+            defaultValue={user.displayName}
+            color="secondary"
+            inputProps={{ style: { fontSize: "20px" } }}
+            onChange={(e) => setDisplayName(e.target.value)}
+          />
           <Button color={isDuplicate ? "error" : "success"} variant="contained" onClick={checkDisplayNameDuplicateFunc}>
             중복확인
           </Button>
-          <TextFieldWrap type="checkbox" name="isDuplicated" />
+          {/* <TextFieldWrap type="checkbox" name="isDuplicated" /> */}
         </FormControlWrap>
         {/* 비밀번호 */}
         <FormControlWrap>
