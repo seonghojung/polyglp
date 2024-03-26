@@ -1,17 +1,17 @@
 import styled from "styled-components";
 
-const Container = styled.div`
+export const Container = styled.div`
   padding: 54px 59px 59px 410px;
   max-width: 1448px;
   margin: 0 auto;
   min-height: calc(100vh - 116px);
 `;
 
-const Header = styled.div`
+export const Header = styled.div`
   padding-bottom: 15px;
 `;
 
-const Title = styled.span`
+export const Title = styled.span`
   font-size: 36px;
   font-weight: 600;
   color: #280559;

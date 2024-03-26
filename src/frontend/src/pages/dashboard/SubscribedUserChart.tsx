@@ -54,7 +54,7 @@ const SubscribedUserChart = ({ startDate, endDate }: { startDate: string; endDat
           />
         </div>
         <Button size="small" variant="contained">
-          sex
+          설정
         </Button>
       </div>
     </div>
