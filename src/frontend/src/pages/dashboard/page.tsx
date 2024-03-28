@@ -12,7 +12,6 @@ import { Container, Header, Title } from "../components/Template";
 
 const Wrap = styled.div`
   /* width: 89.108%; */
-
   margin-top: 102px;
   /* height: calc(100vh - 273px); */
   background-color: #fff;
@@ -20,17 +19,21 @@ const Wrap = styled.div`
 `;
 
 const Inner = styled.div`
-  padding: 35px 47px 61px 47px;
+  padding: 35px 42px 61px 42px;
+  overflow: hidden;
 `;
 
 const Subtitle = styled.p`
   font-size: 22px;
   font-weight: 600;
+  margin-bottom: 34px;
 `;
 
 const TotalCountWrap = styled.div`
-  display: flex;
-  /* flex-direction: row; */
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 28px;
 `;
 
 const BorderWrap = styled.div`
@@ -45,6 +48,10 @@ const BorderWrap = styled.div`
   border: solid 1px #a0a0a0;
   background-color: transparent;
 `;
+const AppBorderWrap = styled(BorderWrap)`
+  width: 100%;
+  max-width: 287px;
+`;
 const BorderTitle = styled.div`
   font-size: 18px;
   font-weight: 500;
@@ -53,10 +60,21 @@ const BorderTitle = styled.div`
 `;
 
 const BorderDescription = styled.div`
+  margin-top: 8px;
   font-size: 28px;
   font-weight: bold;
-  /* text-align: center; */
   color: #0f0f0f;
+`;
+
+const BorderAppDescription = styled(BorderDescription)`
+  margin-top: 30px;
+`;
+
+const AppWrap = styled.div`
+  margin-left: 67px;
+  display: flex;
+  gap: 28px;
+  /* grid-template-columns: 1fr 1fr 1fr 1fr; */
 `;
 
 export type EChartsOption = echarts.ComposeOption<GridComponentOption | LineSeriesOption | TitleComponentOption | TooltipComponentOption | LegendComponentOption | PieSeriesOption>;
@@ -90,8 +108,6 @@ export default function DashBoardPage() {
               <BorderTitle>총 영상 통화 시간</BorderTitle>
               <BorderDescription>653 Hour</BorderDescription>
             </BorderWrap>
-          </TotalCountWrap>
-          <TotalCountWrap>
             <BorderWrap>
               <BorderTitle>총 영상 통화 시간</BorderTitle>
               <BorderDescription>653 Hour</BorderDescription>
@@ -134,10 +150,26 @@ export default function DashBoardPage() {
             </div>
           </div>
 
-          <div>
+          <div style={{ marginTop: "34px" }}>
             <Subtitle>APP 통계</Subtitle>
-
-            <div>대충하단내용들어갈것들</div>
+            <AppWrap>
+              <AppBorderWrap>
+                <BorderTitle>MAU</BorderTitle>
+                <BorderAppDescription>1,000</BorderAppDescription>
+              </AppBorderWrap>
+              <AppBorderWrap>
+                <BorderTitle>DAU</BorderTitle>
+                <BorderAppDescription>1,000</BorderAppDescription>
+              </AppBorderWrap>
+              <AppBorderWrap>
+                <BorderTitle>신고 건수(미처리)</BorderTitle>
+                <BorderAppDescription>1,000</BorderAppDescription>
+              </AppBorderWrap>
+              <AppBorderWrap>
+                <BorderTitle>신고 건수(처리)</BorderTitle>
+                <BorderAppDescription>1,000</BorderAppDescription>
+              </AppBorderWrap>
+            </AppWrap>
           </div>
         </Inner>
       </Wrap>

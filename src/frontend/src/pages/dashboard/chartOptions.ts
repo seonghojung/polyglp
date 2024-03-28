@@ -42,9 +42,9 @@ export const languageOption: EChartsOption = {
     formatter: "{a} <br/>{b} : {c}명 ({d}%)",
   },
   legend: {
-    orient: "vertical",
-    right: 10,
-    top: "center",
+    orient: "horizontal",
+    right: 0,
+    bottom: 0,
   },
   series: [
     {
@@ -79,10 +79,17 @@ export const BusinessOption: EChartsOption = {
     formatter: "{a} <br/>{b} : {c}명 ({d}%)",
   },
   legend: {
-    orient: "vertical",
-    right: 10,
-    top: "center",
+    orient: "horizontal",
+    right: 0,
+    bottom: -4,
+    itemGap: 10,
   },
+  grid: {
+    show: false,
+    width: "100%",
+    height: "100%",
+  },
+
   series: [
     {
       name: "사용 언어",
@@ -116,9 +123,15 @@ export const RandomOption: EChartsOption = {
     formatter: "{a} <br/>{b} : {c}명 ({d}%)",
   },
   legend: {
-    orient: "vertical",
-    right: 10,
-    top: "center",
+    orient: "horizontal",
+    right: 0,
+    bottom: -4,
+    itemGap: 10,
+  },
+  grid: {
+    show: false,
+    width: "100%",
+    height: "100%",
   },
   series: [
     {
