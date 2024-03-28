@@ -1,32 +1,45 @@
-import * as echarts from "echarts/core";
-import { GridComponentOption, LegendComponentOption, TitleComponentOption, TooltipComponentOption } from "echarts/components";
-import { LineSeriesOption, PieSeriesOption } from "echarts/charts";
-import EChartsReact from "echarts-for-react";
+import * as echarts from 'echarts/core';
+import {
+  GridComponentOption,
+  LegendComponentOption,
+  TitleComponentOption,
+  TooltipComponentOption,
+} from 'echarts/components';
+import { LineSeriesOption, PieSeriesOption } from 'echarts/charts';
+import EChartsReact from 'echarts-for-react';
 
-import "react-datepicker/dist/react-datepicker.css";
+import 'react-datepicker/dist/react-datepicker.css';
 
-import SubscribedUserChart from "./SubscribedUserChart";
-import { languageOption, BusinessOption, RandomOption } from "./chartOptions";
-import styled from "styled-components";
-import { Container, Header, Title } from "../components/Template";
+import SubscribedUserChart from './SubscribedUserChart';
+import { languageOption, BusinessOption, RandomOption } from './chartOptions';
+import styled from 'styled-components';
+import { Header, Title } from '../components/Template';
 
-const Wrap = styled.div`
-  /* width: 89.108%; */
+export const Wrap = styled.div`
   margin-top: 102px;
-  /* height: calc(100vh - 273px); */
-  background-color: #fff;
-  border-radius: 10px;
+  /* background-color: #fff; */
+  /* border-radius: 10px; */
 `;
 
-const Inner = styled.div`
+export const Inner = styled.div`
+  /* width: 600px; */
+  background-color: #fff;
+  border-radius: 10px;
   padding: 35px 42px 61px 42px;
-  overflow: hidden;
+  overflow-x: auto;
 `;
 
 const Subtitle = styled.p`
   font-size: 22px;
   font-weight: 600;
   margin-bottom: 34px;
+`;
+
+const ChartTitle = styled.p`
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 34px;
+  text-align: center;
 `;
 
 const TotalCountWrap = styled.div`
@@ -55,7 +68,6 @@ const AppBorderWrap = styled(BorderWrap)`
 const BorderTitle = styled.div`
   font-size: 18px;
   font-weight: 500;
-  /* text-align: center; */
   color: #280559;
 `;
 
@@ -70,24 +82,40 @@ const BorderAppDescription = styled(BorderDescription)`
   margin-top: 30px;
 `;
 
+const EChartsReactWrap = styled.div`
+  display: flex;
+
+  @media (max-width: 1309px) {
+    flex-direction: column;
+    gap: 70px;
+  }
+`;
+
 const AppWrap = styled.div`
   margin-left: 67px;
   display: flex;
   gap: 28px;
-  /* grid-template-columns: 1fr 1fr 1fr 1fr; */
 `;
 
-export type EChartsOption = echarts.ComposeOption<GridComponentOption | LineSeriesOption | TitleComponentOption | TooltipComponentOption | LegendComponentOption | PieSeriesOption>;
+export type EChartsOption = echarts.ComposeOption<
+  | GridComponentOption
+  | LineSeriesOption
+  | TitleComponentOption
+  | TooltipComponentOption
+  | LegendComponentOption
+  | PieSeriesOption
+>;
+
 export default function DashBoardPage() {
   // 아트보드 : 0. 대시보드
   // WBS : 대시보드
 
   // @TODO: 당일부터 3개월까지의 집계 쿼리를 서버에서 받아올 것
-  const startDate = "2023-12-22T00:00:00.591Z";
-  const endDate = "2024-03-22T00:00:00.591Z";
+  const startDate = '2023-12-22T00:00:00.591Z';
+  const endDate = '2024-03-22T00:00:00.591Z';
 
   return (
-    <Container>
+    <>
       <Header>
         <Title>대시보드</Title>
       </Header>
@@ -127,30 +155,34 @@ export default function DashBoardPage() {
       <Wrap>
         <Inner>
           <Subtitle>트렌드 지표</Subtitle>
-          <div style={{ display: "flex" }}>
+          <EChartsReactWrap>
             <div style={{ flex: 1 }}>
+              <ChartTitle>구독자 수 변화 그래프(월별)</ChartTitle>
               <SubscribedUserChart startDate={startDate} endDate={endDate} />
             </div>
             <div style={{ flex: 1 }}>
-              <EChartsReact option={languageOption} opts={{ renderer: "canvas", width: "auto", height: "auto" }} />
+              <ChartTitle>사용자 별 언어 분포도</ChartTitle>
+              <EChartsReact option={languageOption} opts={{ renderer: 'canvas', width: 'auto', height: 'auto' }} />
             </div>
-          </div>
+          </EChartsReactWrap>
         </Inner>
       </Wrap>
 
       <Wrap>
         <Inner>
           <Subtitle>연어 별 매칭 통계</Subtitle>
-          <div style={{ display: "flex" }}>
+          <EChartsReactWrap>
             <div style={{ flex: 1 }}>
-              <EChartsReact option={BusinessOption} opts={{ renderer: "canvas", width: "auto", height: "auto" }} />
+              <ChartTitle>비즈니스 채팅</ChartTitle>
+              <EChartsReact option={BusinessOption} opts={{ renderer: 'canvas', width: 'auto', height: 'auto' }} />
             </div>
             <div style={{ flex: 1 }}>
-              <EChartsReact option={RandomOption} opts={{ renderer: "canvas", width: "auto", height: "auto" }} />
+              <ChartTitle>랜덤 채팅</ChartTitle>
+              <EChartsReact option={RandomOption} opts={{ renderer: 'canvas', width: 'auto', height: 'auto' }} />
             </div>
-          </div>
+          </EChartsReactWrap>
 
-          <div style={{ marginTop: "34px" }}>
+          <div style={{ marginTop: '34px' }}>
             <Subtitle>APP 통계</Subtitle>
             <AppWrap>
               <AppBorderWrap>
@@ -173,6 +205,6 @@ export default function DashBoardPage() {
           </div>
         </Inner>
       </Wrap>
-    </Container>
+    </>
   );
 }

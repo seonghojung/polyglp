@@ -1,8 +1,10 @@
-import { Outlet, useLocation } from "react-router-dom";
-import styled from "styled-components";
-import { NavLink } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { BASE_URL } from "./Types";
+import { useLocation } from 'react-router-dom';
+import styled from 'styled-components';
+import { NavLink } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { BASE_URL } from './Types';
+import { useRecoilState } from 'recoil';
+import { isSidebarCollapsedAtom } from './Atom';
 
 // BEGIN: Style Component
 const SidebarWrap = styled.div`
@@ -166,18 +168,20 @@ const MenuItemFunc = ({ to, iconSrc, activeIconSrc, text, alarmCount }: IMenuIte
 };
 
 export default function Sidebar() {
-  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false); // 사이드바 collapse
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useRecoilState(isSidebarCollapsedAtom); // 사이드바 collapse
+
   const [evilReportAlarmCount, setEvilReportAlarmCount] = useState(0);
   const [qnaAlarmCount, setQnaAlarmCount] = useState(0);
   // const [adminUserID, setAdminUserID] = useState("");
   // 관리자 정보, cs, 고객문의 미처리건
+
   useEffect(() => {
     // postSidebarInfos
 
     const fetchData = async () => {
       try {
         // API 컨트롤러의 특정 함수를 호출합니다.
-        const response = await fetch(`${BASE_URL}/api/sidebar-infos`, { method: "POST", credentials: "include" });
+        const response = await fetch(`${BASE_URL}/api/sidebar-infos`, { method: 'POST', credentials: 'include' });
         if (response.ok) {
           const responseData = await response.json();
 
@@ -188,7 +192,7 @@ export default function Sidebar() {
         }
       } catch (error) {
         // 오류 처리를 수행합니다.
-        console.error("Error fetching data:", error);
+        console.error('Error fetching data:', error);
       }
     };
     fetchData();
@@ -201,64 +205,95 @@ export default function Sidebar() {
   // 사이드바 메뉴
   const menuItems: IMenuItemFunc[] = [
     {
-      to: "/dashboard",
-      iconSrc: "/images/sidebar/dashboard.png",
-      activeIconSrc: "/images/sidebar/dashboard-active.png",
-      text: "대시 보드",
+      to: '/dashboard',
+      iconSrc: '/images/sidebar/dashboard.png',
+      activeIconSrc: '/images/sidebar/dashboard-active.png',
+      text: '대시 보드',
       alarmCount: 0,
     },
     {
-      to: "/user-info",
-      iconSrc: "/images/sidebar/user-info.png",
-      activeIconSrc: "/images/sidebar/user-info-active.png",
-      text: "회원 정보",
+      to: '/user-info',
+      iconSrc: '/images/sidebar/user-info.png',
+      activeIconSrc: '/images/sidebar/user-info-active.png',
+      text: '회원 정보',
       alarmCount: 0,
     },
     {
-      to: "/cs",
-      iconSrc: "/images/sidebar/cs.png",
-      activeIconSrc: "/images/sidebar/cs-active.png",
-      text: "CS관리",
+      to: '/cs',
+      iconSrc: '/images/sidebar/cs.png',
+      activeIconSrc: '/images/sidebar/cs-active.png',
+      text: 'CS관리',
       alarmCount: evilReportAlarmCount,
     },
-    { to: "/statics", iconSrc: "/images/sidebar/statics.png", activeIconSrc: "/images/sidebar/statics-active.png", text: "통계 지표", alarmCount: 0 },
-    { to: "/payment", iconSrc: "/images/sidebar/payment.png", activeIconSrc: "/images/sidebar/payment-active.png", text: "결제 통계", alarmCount: 0 },
-    { to: "/admin", iconSrc: "/images/sidebar/admin.png", activeIconSrc: "/images/sidebar/admin-active.png", text: "관리자 계정", alarmCount: 0 },
     {
-      to: "/chatting-session",
-      iconSrc: "/images/sidebar/chatting-session.png",
-      activeIconSrc: "/images/sidebar/chatting-session-active.png",
-      text: "채팅방 세션",
+      to: '/statics',
+      iconSrc: '/images/sidebar/statics.png',
+      activeIconSrc: '/images/sidebar/statics-active.png',
+      text: '통계 지표',
       alarmCount: 0,
     },
     {
-      to: "/inquiry",
-      iconSrc: "/images/sidebar/inquiry.png",
-      activeIconSrc: "/images/sidebar/inquiry-active.png",
-      text: "고객 문의",
+      to: '/payment',
+      iconSrc: '/images/sidebar/payment.png',
+      activeIconSrc: '/images/sidebar/payment-active.png',
+      text: '결제 통계',
+      alarmCount: 0,
+    },
+    {
+      to: '/admin',
+      iconSrc: '/images/sidebar/admin.png',
+      activeIconSrc: '/images/sidebar/admin-active.png',
+      text: '관리자 계정',
+      alarmCount: 0,
+    },
+    {
+      to: '/chatting-session',
+      iconSrc: '/images/sidebar/chatting-session.png',
+      activeIconSrc: '/images/sidebar/chatting-session-active.png',
+      text: '채팅방 세션',
+      alarmCount: 0,
+    },
+    {
+      to: '/inquiry',
+      iconSrc: '/images/sidebar/inquiry.png',
+      activeIconSrc: '/images/sidebar/inquiry-active.png',
+      text: '고객 문의',
       alarmCount: qnaAlarmCount,
     },
-    { to: "/setting", iconSrc: "/images/sidebar/setting.png", activeIconSrc: "/images/sidebar/setting-active.png", text: "설정", alarmCount: 0 },
+    {
+      to: '/setting',
+      iconSrc: '/images/sidebar/setting.png',
+      activeIconSrc: '/images/sidebar/setting-active.png',
+      text: '설정',
+      alarmCount: 0,
+    },
   ];
 
   return (
-    <SidebarWrap className={isSidebarCollapsed ? "animation" : ""}>
+    <SidebarWrap className={isSidebarCollapsed ? 'animation' : ''}>
       <MenuToggleBtn onClick={toggleSidebar}>
         <ToggleBtnImg src="/images/sidebar/menu_btn.png" />
       </MenuToggleBtn>
-      <MenuToggleWrap className={isSidebarCollapsed ? "animation" : ""}>
+      <MenuToggleWrap className={isSidebarCollapsed ? 'animation' : ''}>
         <ToggleTopWrap>
           <TopTitle>MENU</TopTitle>
           <MenuItems>
             {menuItems.map((item, index) => (
-              <MenuItemFunc key={index} to={item.to} iconSrc={item.iconSrc} activeIconSrc={item.activeIconSrc} text={item.text} alarmCount={item.alarmCount} />
+              <MenuItemFunc
+                key={index}
+                to={item.to}
+                iconSrc={item.iconSrc}
+                activeIconSrc={item.activeIconSrc}
+                text={item.text}
+                alarmCount={item.alarmCount}
+              />
             ))}
           </MenuItems>
         </ToggleTopWrap>
         {/* TODO: 관리자 정보 이름 연결 */}
         <ToggleBottomWrap>
           <AdminInfoWrap>
-            <InfoCenterWrap className={isSidebarCollapsed ? "" : "active"}>
+            <InfoCenterWrap className={isSidebarCollapsed ? '' : 'active'}>
               <AdminName>관리자</AdminName>
               <AdminEmail>thor@amin.com</AdminEmail>
             </InfoCenterWrap>

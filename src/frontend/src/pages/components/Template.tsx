@@ -1,11 +1,6 @@
-import styled from "styled-components";
-
-export const Container = styled.div`
-  padding: 54px 59px 59px 410px;
-  max-width: 1448px;
-  margin: 0 auto;
-  min-height: calc(100vh - 116px);
-`;
+import { useRecoilValue } from 'recoil';
+import styled from 'styled-components';
+import { isSidebarCollapsedAtom } from '../../Atom';
 
 export const Header = styled.div`
   padding-bottom: 15px;
@@ -32,15 +27,19 @@ const Inner = styled.div`
 `;
 
 const Template = ({ children, title }: { children: React.ReactElement; title: string }) => {
+  const isSidebarCollapsed = useRecoilValue(isSidebarCollapsedAtom);
+
+  console.log(isSidebarCollapsed, '?');
+
   return (
-    <Container>
+    <>
       <Header>
         <Title>{title}</Title>
       </Header>
       <Wrap>
         <Inner>{children}</Inner>
       </Wrap>
-    </Container>
+    </>
   );
 };
 

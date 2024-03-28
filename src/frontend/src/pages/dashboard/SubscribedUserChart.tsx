@@ -1,8 +1,8 @@
-import EChartsReact from "echarts-for-react";
-import ReactDatePickerComponent from "react-datepicker";
-import { useEffect, useState } from "react";
-import { SubscribedUserOptions } from "./chartOptions";
-import { Button } from "@mui/material";
+import EChartsReact from 'echarts-for-react';
+import ReactDatePickerComponent from 'react-datepicker';
+import { useEffect, useState } from 'react';
+import { SubscribedUserOptions } from './chartOptions';
+import { Button } from '@mui/material';
 
 const converToISO = (e: Date): string => {
   e.setHours(e.getHours() + 9);
@@ -11,12 +11,12 @@ const converToISO = (e: Date): string => {
 };
 
 const formatDate = (isoString?: string) => {
-  if (!isoString) return "오류가 발생했습니다.";
+  if (!isoString) return '오류가 발생했습니다.';
   const dateObject = new Date(isoString);
   // 연도, 월, 일 추출
   const year = dateObject.getFullYear().toString().slice(2);
-  const month = (dateObject.getMonth() + 1).toString().padStart(2, "0");
-  const day = dateObject.getDate().toString().padStart(2, "0");
+  const month = (dateObject.getMonth() + 1).toString().padStart(2, '0');
+  const day = dateObject.getDate().toString().padStart(2, '0');
 
   // YY년 MM월 DD일 형식으로 조합하여 반환
   return `${year}년 ${month}월 ${day}일`;
@@ -33,8 +33,8 @@ const SubscribedUserChart = ({ startDate, endDate }: { startDate: string; endDat
 
   return (
     <div>
-      <EChartsReact option={SubscribedUserOptions} opts={{ renderer: "canvas", width: "auto", height: "auto" }} />
-      <div style={{ display: "flex" }}>
+      <EChartsReact option={SubscribedUserOptions} opts={{ renderer: 'canvas', width: 'auto', height: 'auto' }} />
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <div>
           <ReactDatePickerComponent
             onChange={(e) => {
